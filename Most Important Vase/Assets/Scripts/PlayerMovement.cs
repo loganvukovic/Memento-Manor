@@ -100,5 +100,8 @@ public class PlayerMovement : MonoBehaviour
         return raycastHit.collider != null;
     }
 
-
+    public bool canAttack()
+    {
+        return !onWall();
+    }
 }
