@@ -1,5 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Threading;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -13,6 +18,15 @@ public class PlayerMovement : MonoBehaviour
     private PolygonCollider2D polygonCollider;
     private float wallJumpCooldown;
     private float horizontalInput;
+    public float direction;
+
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private TrailRenderer tr;
 
     private void Awake()
     {
@@ -30,20 +44,41 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
-
-        //Flip player when moving left/right
-        if (horizontalInput > 0.01f)
-            transform.localScale = Vector3.one;
-        else if (horizontalInput < -0.01f)
-            transform.localScale = new Vector3(-1, 1, 1);
-
-        if (Input.GetKey(KeyCode.Space) && isGrounded())
+        if (isDashing)
         {
-            Jump();
+            return;
         }
 
+
+
+        horizontalInput = Input.GetAxis("Horizontal");
+
+        if (Input.GetKey(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
+        else
+        {
+            body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
+
+            //Flip player when moving left/right
+            if (horizontalInput > 0.01f)
+            {
+                transform.localScale = Vector3.one;
+                direction = 1;
+            }
+
+            else if (horizontalInput < -0.01f)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+                direction = -1;
+            }
+
+            if (Input.GetKey(KeyCode.Space) && isGrounded())
+            {
+                Jump();
+            }
+        }
         //Walljump stuff
         if (wallJumpCooldown > 0.2f)
         {
@@ -85,6 +120,22 @@ public class PlayerMovement : MonoBehaviour
 
             wallJumpCooldown = 0;
         }
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
     }
 
 
