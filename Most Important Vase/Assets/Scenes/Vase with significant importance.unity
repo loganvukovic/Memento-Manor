@@ -600,9 +600,10 @@ GameObject:
   - component: {fileID: 1839610184}
   - component: {fileID: 1839610183}
   - component: {fileID: 1839610187}
+  - component: {fileID: 1839610188}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -771,9 +772,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   direction: 1
-  dashSpeed: 5
+  dashSpeed: 3000
   dashingTime: 1
   dashingCooldown: 1
+--- !u!114 &1839610188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839610182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561cff651a72cb4419ec22b2d62f5dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knife: {fileID: 1478631641510775381, guid: b5f909972a0302c429d8da22f58f6537, type: 3}
+  shotCooldown: 0.2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
