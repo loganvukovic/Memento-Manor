@@ -770,6 +770,10 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
+  direction: 1
+  dashSpeed: 5
+  dashingTime: 1
+  dashingCooldown: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
