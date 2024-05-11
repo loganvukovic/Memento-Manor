@@ -1846,6 +1846,7 @@ GameObject:
   - component: {fileID: 1501082171}
   - component: {fileID: 1501082173}
   - component: {fileID: 1501082172}
+  - component: {fileID: 1501082174}
   m_Layer: 0
   m_Name: BulletSpawner (1)
   m_TagString: Untagged
@@ -1941,6 +1942,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1501082174
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501082170}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 25
 --- !u!1 &1546755009
 GameObject:
   m_ObjectHideFlags: 0
@@ -2653,11 +2689,11 @@ PrefabInstance:
       objectReference: {fileID: 414401251}
     - target: {fileID: 4985593992024081220, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.2428126
+      value: -14.69
       objectReference: {fileID: 0}
     - target: {fileID: 4985593992024081220, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.29395396
+      value: -5.34
       objectReference: {fileID: 0}
     - target: {fileID: 4985593992024081220, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2710,6 +2746,7 @@ GameObject:
   - component: {fileID: 2121159308}
   - component: {fileID: 2121159307}
   - component: {fileID: 2121159306}
+  - component: {fileID: 2121159309}
   m_Layer: 0
   m_Name: BulletSpawner (1)
   m_TagString: Untagged
@@ -2732,7 +2769,7 @@ MonoBehaviour:
   bullet: {fileID: 8977240430988863955, guid: 25c3e218c1e4664419db2b352096961e, type: 3}
   bulletLife: 2.5
   speed: 7
-  spawnerType: 1
+  spawnerType: 2
   firingRate: 0.75
   coneBulletCount: 5
   coneAngle: 100
@@ -2805,6 +2842,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1726827258}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2121159309
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121159305}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 20
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
