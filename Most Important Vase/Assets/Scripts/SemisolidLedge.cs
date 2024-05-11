@@ -31,5 +31,9 @@ public class SemisolidLedge : MonoBehaviour
             collider.enabled = true;
             //UnityEngine.Debug.Log("Solid");
         }
+        if (player.transform.position.y >= transform.position.y + 0.7 && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && Input.GetKey(KeyCode.Space))
+        {
+            collider.enabled = false;
+        }
     }
 }

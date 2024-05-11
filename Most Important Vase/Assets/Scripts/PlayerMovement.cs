@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if(isGrounded())
+        if(isGrounded() && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.S))
         {
             body.velocity = new Vector2(body.velocity.x, jumpPower);
         }
