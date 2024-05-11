@@ -122,4 +122,20 @@ public class EnemyScript : MonoBehaviour
         }
         else return;
     }
+
+    void OnColliderEnter2D(Collider2D other)
+    {
+        if (other.tag == "Semisolid" && enemyType == EnemyType.Grounded)
+        {
+            rb.gravityScale = 1f;
+        }
+    }
+
+    void OnColliderExit2D(Collider2D other)
+    {
+        if (other.tag == "Semisolid" && enemyType == EnemyType.Grounded)
+        {
+            rb.gravityScale = 0f;
+        }
+    }
 }
