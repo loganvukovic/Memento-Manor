@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour
     public float direction;
     private float damage;
     public PlayerAttacks playerAttack;
+    private bool goingUp = false;
 
 
     /*private void OnAwaken()
@@ -34,8 +35,12 @@ public class Projectile : MonoBehaviour
         direction = playerScript.direction;
         damage = playerAttack.damage;
 
-
-        if (direction == -1)
+        if(playerAttack.shootingUp == true)
+        {
+            goingUp = true;
+            transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+        }
+        else if (direction == -1)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
@@ -48,7 +53,14 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = new Vector2(direction * knifeSpeed * Time.deltaTime, 0);
+        if (goingUp == false)
+        {
+            rb.velocity = new Vector2(direction * knifeSpeed * Time.deltaTime, 0);
+        }
+        else if (goingUp == true)
+        {
+            rb.velocity = new Vector2(0, knifeSpeed * Time.deltaTime);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
