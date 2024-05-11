@@ -149,7 +149,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -170,7 +170,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 0.5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -179,14 +179,14 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.0010941003
+        value: 0.5
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       - serializedVersion: 3
         time: 0.9896373
         value: 0
@@ -241,6 +241,11 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 0
   m_ApplyActiveColorSpace: 1
+--- !u!50 &414401254 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 1549836195086346615, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
+  m_PrefabInstance: {fileID: 1827099492}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &521271570
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,9 +907,21 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 414401254}
+    - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: tr
       value: 
       objectReference: {fileID: 414401251}
+    - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
+      propertyPath: dashingTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
+      propertyPath: dashingPower
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4985593992024081220, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.2428126
