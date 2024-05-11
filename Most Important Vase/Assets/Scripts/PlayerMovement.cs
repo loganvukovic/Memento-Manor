@@ -20,11 +20,13 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput;
     public float direction;
 
-    public float dashSpeed;
     private bool canDash = true;
     private bool isDashing;
-    public float dashingTime;
-    public float dashingCooldown;
+    [SerializeField] private float dashingPower = 24f;
+    [SerializeField] private float dashingTime = 0.2f;
+    [SerializeField] private float dashingCooldown = 1f;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private TrailRenderer tr;
 
     private void Awake()
     {
@@ -47,8 +49,6 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-
-
         horizontalInput = Input.GetAxis("Horizontal");
 
         if (Input.GetKey(KeyCode.LeftShift) && canDash)
@@ -57,15 +57,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
+            // Only handle horizontal movement and flipping here
+            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
 
-            //Flip player when moving left/right
             if (horizontalInput > 0.01f)
             {
                 transform.localScale = Vector3.one;
                 direction = 1;
             }
-
             else if (horizontalInput < -0.01f)
             {
                 transform.localScale = new Vector3(-1, 1, 1);
@@ -77,27 +76,72 @@ public class PlayerMovement : MonoBehaviour
                 Jump();
             }
         }
-        //Walljump stuff
-        if (wallJumpCooldown > 0.2f)
+        /*
+                if (isDashing)
+                {
+                    return;
+                }
+
+
+                horizontalInput = Input.GetAxis("Horizontal");
+
+                if (Input.GetKey(KeyCode.LeftShift) && canDash)
+                {
+                    StartCoroutine(Dash());
+                }
+                else
+                {
+                    body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
+
+                    //Flip player when moving left/right
+                    if (horizontalInput > 0.01f)
+                    {
+                        transform.localScale = Vector3.one;
+                        direction = 1;
+                    }
+
+                    else if (horizontalInput < -0.01f)
+                    {
+                        transform.localScale = new Vector3(-1, 1, 1);
+                        direction = -1;
+                    }
+
+                    if (Input.GetKey(KeyCode.Space) && isGrounded())
+                    {
+                        Jump();
+                    }
+                }
+                //Walljump stuff
+                if (wallJumpCooldown > 0.2f)
+                {
+
+
+                    body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+
+                    if (onWall() && isGrounded())
+                    {
+                        body.gravityScale = 0;
+                        body.velocity = Vector2.zero;
+                    }
+                    else
+                        body.gravityScale = 1;
+
+                    if (Input.GetKey(KeyCode.Space))
+                        Jump();
+                }
+                else
+                    wallJumpCooldown += Time.deltaTime;
+        */
+    }
+
+    private void FixedUpdate()
+    {
+        /*
+        if (isDashing)
         {
-
-
-            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-
-            if (onWall() && isGrounded())
-            {
-                body.gravityScale = 0;
-                body.velocity = Vector2.zero;
-            }
-            else
-                body.gravityScale = 1;
-
-            if (Input.GetKey(KeyCode.Space))
-                Jump();
+            return;
         }
-        else
-            wallJumpCooldown += Time.deltaTime;
-
+        */
     }
 
     private void Jump()
@@ -124,14 +168,13 @@ public class PlayerMovement : MonoBehaviour
     {
         canDash = false;
         isDashing = true;
-        float originalGravity = body.gravityScale;
-        body.gravityScale = 0f;
-        //body.AddForce(new Vector2(transform.localScale.x * dashSpeed, 0f));
-        body.velocity = new Vector2(transform.localScale.x * dashSpeed, 0f);
-        UnityEngine.Debug.Log(body.gravityScale);
-        UnityEngine.Debug.Log(transform.localScale.x * dashSpeed);
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
-        body.gravityScale = originalGravity;
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
@@ -150,5 +193,8 @@ public class PlayerMovement : MonoBehaviour
         return raycastHit.collider != null;
     }
 
-
+    public bool canAttack()
+    {
+        return !onWall();
+    }
 }
