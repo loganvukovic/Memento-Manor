@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //Grab references for rigidbody
         body = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         polygonCollider = GetComponent<PolygonCollider2D>();
     }
 
