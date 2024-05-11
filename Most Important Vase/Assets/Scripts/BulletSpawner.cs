@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
 {
-    enum SpawnerType {Straight, Spin, Cone}
+    enum SpawnerType {Straight, Spin, Cone, Aimed}
 
     [Header("Bullet Attributes")]
     public GameObject bullet;
@@ -19,6 +20,10 @@ public class BulletSpawner : MonoBehaviour
 
     private GameObject spawnedBullet;
     private float timer = 0f;
+
+    public GameObject player;
+    private float angle;
+    public Vector3 aimedOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +40,13 @@ public class BulletSpawner : MonoBehaviour
         {
             Fire();
             timer = 0;
+        }
+
+        if (spawnerType == SpawnerType.Aimed)
+        {
+            Vector3 playerDirection = (player.transform.position + aimedOffset - transform.position).normalized;
+            angle = Mathf.Rad2Deg * Mathf.Atan2(playerDirection.y, playerDirection.x);
+            transform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
     }
 
