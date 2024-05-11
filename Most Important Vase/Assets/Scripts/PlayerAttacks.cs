@@ -8,6 +8,7 @@ public class PlayerAttacks : MonoBehaviour
     public GameObject knife;
     private float timeSinceShot;
     public float shotCooldown;
+    public float damage = 1f;
 
     // Start is called before the first frame update
     void Start()

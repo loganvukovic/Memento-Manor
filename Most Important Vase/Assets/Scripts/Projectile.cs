@@ -12,6 +12,8 @@ public class Projectile : MonoBehaviour
     public PlayerMovement playerScript;
     public GameObject player;
     public float direction;
+    private float damage;
+    public PlayerAttacks playerAttack;
 
 
     /*private void OnAwaken()
@@ -28,7 +30,9 @@ public class Projectile : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerMovement>();
+        playerAttack = player.GetComponent<PlayerAttacks>();
         direction = playerScript.direction;
+        damage = playerAttack.damage;
 
 
         if (direction == -1)
@@ -51,6 +55,11 @@ public class Projectile : MonoBehaviour
     {
         if (other.tag == "Ground")
         {
+            Destroy(this.gameObject);
+        }
+        if (other.tag == "Enemy")
+        {
+            other.gameObject.GetComponent<EnemyScript>().TakeDamage(damage);
             Destroy(this.gameObject);
         }
     }
