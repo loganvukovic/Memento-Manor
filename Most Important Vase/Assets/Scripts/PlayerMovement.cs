@@ -22,9 +22,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 24f;
-    private float dashingTime = 0.2f;
-    private float dashingCooldown = 1f;
+    [SerializeField] private float dashingPower = 24f;
+    [SerializeField] private float dashingTime = 0.2f;
+    [SerializeField] private float dashingCooldown = 1f;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private TrailRenderer tr;
 
@@ -49,8 +49,6 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-
-
         horizontalInput = Input.GetAxis("Horizontal");
 
         if (Input.GetKey(KeyCode.LeftShift) && canDash)
@@ -59,15 +57,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
+            // Only handle horizontal movement and flipping here
+            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
 
-            //Flip player when moving left/right
             if (horizontalInput > 0.01f)
             {
                 transform.localScale = Vector3.one;
                 direction = 1;
             }
-
             else if (horizontalInput < -0.01f)
             {
                 transform.localScale = new Vector3(-1, 1, 1);
@@ -79,27 +76,72 @@ public class PlayerMovement : MonoBehaviour
                 Jump();
             }
         }
-        //Walljump stuff
-        if (wallJumpCooldown > 0.2f)
+        /*
+                if (isDashing)
+                {
+                    return;
+                }
+
+
+                horizontalInput = Input.GetAxis("Horizontal");
+
+                if (Input.GetKey(KeyCode.LeftShift) && canDash)
+                {
+                    StartCoroutine(Dash());
+                }
+                else
+                {
+                    body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
+
+                    //Flip player when moving left/right
+                    if (horizontalInput > 0.01f)
+                    {
+                        transform.localScale = Vector3.one;
+                        direction = 1;
+                    }
+
+                    else if (horizontalInput < -0.01f)
+                    {
+                        transform.localScale = new Vector3(-1, 1, 1);
+                        direction = -1;
+                    }
+
+                    if (Input.GetKey(KeyCode.Space) && isGrounded())
+                    {
+                        Jump();
+                    }
+                }
+                //Walljump stuff
+                if (wallJumpCooldown > 0.2f)
+                {
+
+
+                    body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+
+                    if (onWall() && isGrounded())
+                    {
+                        body.gravityScale = 0;
+                        body.velocity = Vector2.zero;
+                    }
+                    else
+                        body.gravityScale = 1;
+
+                    if (Input.GetKey(KeyCode.Space))
+                        Jump();
+                }
+                else
+                    wallJumpCooldown += Time.deltaTime;
+        */
+    }
+
+    private void FixedUpdate()
+    {
+        /*
+        if (isDashing)
         {
-
-
-            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-
-            if (onWall() && isGrounded())
-            {
-                body.gravityScale = 0;
-                body.velocity = Vector2.zero;
-            }
-            else
-                body.gravityScale = 1;
-
-            if (Input.GetKey(KeyCode.Space))
-                Jump();
+            return;
         }
-        else
-            wallJumpCooldown += Time.deltaTime;
-
+        */
     }
 
     private void Jump()
