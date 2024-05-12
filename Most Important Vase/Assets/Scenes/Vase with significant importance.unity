@@ -3890,11 +3890,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: dashingTime
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: dashingPower
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: currentHealth
