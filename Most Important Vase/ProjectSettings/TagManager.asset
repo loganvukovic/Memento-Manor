@@ -8,6 +8,7 @@ TagManager:
   - Player Projectile
   - Ground
   - Enemy
+  - Semisolid
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Wall
   - Player
   - Enemy
-  - 
+  - Semisolid
   - 
   - 
   - 

@@ -14,6 +14,8 @@ public class BulletSpawner : MonoBehaviour
 
     [Header("Spawner Attributes")]
     [SerializeField] private SpawnerType spawnerType;
+    public int totalShots;
+    private int shotsLeft;
     [SerializeField] private float firingRate = 1f;
     [SerializeField] private int coneBulletCount = 3;
     [SerializeField] private float coneAngle = 30f;
@@ -24,11 +26,12 @@ public class BulletSpawner : MonoBehaviour
     public GameObject player;
     private float angle;
     public Vector3 aimedOffset;
+    private bool canShoot = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        shotsLeft = totalShots;
     }
 
     // Update is called once per frame
@@ -36,10 +39,19 @@ public class BulletSpawner : MonoBehaviour
     {
         timer += Time.deltaTime;
         if (spawnerType == SpawnerType.Spin) transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z+1f);
-        if(timer >= firingRate)
+        if (timer >= firingRate && canShoot)
         {
-            Fire();
-            timer = 0;
+            if (totalShots == 0)
+            {
+                Fire();
+                timer = 0;
+            }
+            else if (totalShots > 0 && shotsLeft > 0) 
+            {
+                Fire();
+                timer = 0;
+                shotsLeft -= 1;
+            }
         }
 
         if (spawnerType == SpawnerType.Aimed)
@@ -73,6 +85,22 @@ public class BulletSpawner : MonoBehaviour
                 spawnedBullet.GetComponent<Bullet>().speed = speed;
                 spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            canShoot = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            canShoot = false;
         }
     }
 

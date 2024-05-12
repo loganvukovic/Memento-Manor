@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7615036594393331262}
   - component: {fileID: 7542254905732192023}
   - component: {fileID: 6120911654395043806}
+  - component: {fileID: 2549876151620006614}
   m_Layer: 0
   m_Name: EnemyBulletPrefab
   m_TagString: Enemy Projectile
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 1908469173, guid: e4dbb80fb31c9764d97a2060fdef2915, type: 3}
   m_Color: {r: 0, g: 0.9161558, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,3 +101,24 @@ MonoBehaviour:
   bulletLife: 1
   rotation: 0
   speed: 1
+--- !u!95 &2549876151620006614
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8977240430988863955}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 78ef2a30cd45fa348913f1a1f3c376d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

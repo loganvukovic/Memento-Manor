@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static System.Net.Mime.MediaTypeNames;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -28,6 +29,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private TrailRenderer tr;
 
+    public bool inDialogue = false;
+    public DialogueManager dialogueManager;
+    public float dialogueCooldown = 0.7f;
+    private float dialogueTimer;
+    public float timeSinceDialogue;
+
     private void Awake()
     {
         //Grab references for rigidbody
@@ -39,12 +46,31 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UnityEngine.Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!inDialogue) 
+        {
+            dialogueTimer = 0;
+            timeSinceDialogue += Time.deltaTime;
+        }
+        else
+        {
+            dialogueTimer += Time.deltaTime;
+        }
+        if (inDialogue && Input.GetKey(KeyCode.E) && dialogueTimer >= dialogueCooldown)
+        {
+            dialogueManager.DisplayNextSentence();
+            dialogueTimer = 0;
+        }
+
+        if (inDialogue)
+        {
+            return;
+        }
         if (isDashing)
         {
             return;
@@ -147,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if(isGrounded())
+        if(isGrounded() && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.S))
         {
             body.velocity = new Vector2(body.velocity.x, jumpPower);
         }
@@ -182,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private bool isGrounded()
+    public bool isGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(polygonCollider.bounds.center, polygonCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
         return raycastHit.collider != null;

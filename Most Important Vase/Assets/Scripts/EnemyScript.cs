@@ -13,12 +13,18 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private EnemyType enemyType;
     public float leftPatrolBound;
     public float rightPatrolBound;
-    public bool goingLeft = false;
-    public bool goingRight = false;
-    public Vector3 startingPosition;
+    public float upPatrolBound;
+    public float downPatrolBound;
+    private bool goingLeft = false;
+    private bool goingRight = false;
+    private bool goingUp = false;
+    private bool goingDown = false;
+    private Vector3 startingPosition;
 
     public float movementSpeed;
     private Rigidbody2D rb;
+
+    public float health = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +47,7 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyType == EnemyType.Grounded && (leftPatrolBound != 0 || rightPatrolBound != 0))
+        if ((enemyType == EnemyType.Grounded && (leftPatrolBound != 0 || rightPatrolBound != 0)) || (enemyType == EnemyType.Flying && (leftPatrolBound != 0 || rightPatrolBound != 0) && upPatrolBound == 0 && downPatrolBound == 0))
         {
             if (!goingLeft && !goingRight)
             {
@@ -55,6 +61,7 @@ public class EnemyScript : MonoBehaviour
             {
                 rb.velocity = new Vector2(movementSpeed * Time.deltaTime, 0f);
             }
+            //failsafe
             else if (goingRight && goingLeft)
             {
                 goingRight = false;
@@ -70,6 +77,65 @@ public class EnemyScript : MonoBehaviour
                 goingLeft = true;
                 goingRight = false;
             }
+        }
+        //Note: Flying enemies will default to moving up/down
+        //To make one move horizontally, set upPatrolBound and downPatrolBound to 0
+        else if (enemyType == EnemyType.Flying && (upPatrolBound != 0 || downPatrolBound != 0)) 
+        {
+            if (!goingUp && !goingDown)
+            {
+                goingDown = true;
+            }
+            else if (goingDown && transform.position.y >= startingPosition.y - downPatrolBound)
+            {
+                rb.velocity = new Vector2(0f, movementSpeed * Time.deltaTime * -1);
+            }
+            else if (goingUp && transform.position.y <= startingPosition.y + upPatrolBound)
+            {
+                rb.velocity = new Vector2(0f, movementSpeed * Time.deltaTime);
+            }
+            //failsafe
+            else if (goingUp && goingDown)
+            {
+                goingUp = false;
+            }
+
+            if (transform.position.y <= startingPosition.y - downPatrolBound)
+            {
+                goingDown = false;
+                goingUp = true;
+            }
+            if (transform.position.y >= startingPosition.y + upPatrolBound)
+            {
+                goingDown = true;
+                goingUp = false;
+            }
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0f)
+        {
+            Destroy(this.gameObject);
+        }
+        else return;
+    }
+
+    void OnColliderEnter2D(Collider2D other)
+    {
+        if (other.tag == "Semisolid" && enemyType == EnemyType.Grounded)
+        {
+            rb.gravityScale = 1f;
+        }
+    }
+
+    void OnColliderExit2D(Collider2D other)
+    {
+        if (other.tag == "Semisolid" && enemyType == EnemyType.Grounded)
+        {
+            rb.gravityScale = 0f;
         }
     }
 }
