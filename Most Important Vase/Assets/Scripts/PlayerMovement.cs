@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
     private Rigidbody2D body;
-    private PolygonCollider2D polygonCollider;
+    private CapsuleCollider2D polygonCollider;
     private float wallJumpCooldown;
     private float horizontalInput;
     public float direction;
@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         //Grab references for rigidbody
         body = GetComponent<Rigidbody2D>();
         rb = GetComponent<Rigidbody2D>();
-        polygonCollider = GetComponent<PolygonCollider2D>();
+        polygonCollider = GetComponent<CapsuleCollider2D>();
     }
 
     // Start is called before the first frame update
