@@ -11,6 +11,7 @@ public class BulletSpawner : MonoBehaviour
     public GameObject bullet;
     public float bulletLife = 1f;
     public float speed = 1f;
+    public float damage = 5f;
 
     [Header("Spawner Attributes")]
     [SerializeField] private SpawnerType spawnerType;
@@ -77,6 +78,7 @@ public class BulletSpawner : MonoBehaviour
                     spawnedBullet = Instantiate(bullet, transform.position, bulletRotation);
                     spawnedBullet.GetComponent<Bullet>().speed = speed;
                     spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                    spawnedBullet.GetComponent<Bullet>().damage = damage;
                 }
             }
             else
@@ -84,6 +86,7 @@ public class BulletSpawner : MonoBehaviour
                 spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
                 spawnedBullet.GetComponent<Bullet>().speed = speed;
                 spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                spawnedBullet.GetComponent<Bullet>().damage = damage;
             }
         }
     }

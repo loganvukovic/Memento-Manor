@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public float bulletLife = 1f; //Defines how long before the bullet is destroyed
     public float rotation = 0f;
     public float speed = 1f;
+    public float damage = 5f;
 
     private Vector2 spawnPoint;
     private float timer = 0f;
@@ -31,5 +32,18 @@ public class Bullet : MonoBehaviour
         float x = timer * speed * transform.right.x;
         float y = timer * speed * transform.right.y;
         return new Vector2(x + spawnPoint.x, y + spawnPoint.y);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        /*if (other.tag == "Ground")
+        {
+            Destroy(this.gameObject);
+        }*/
+        if (other.tag == "Player")
+        {
+            other.GetComponent<PlayerMovement>().currentHealth -= damage;
+            Destroy(this.gameObject);
+        }
     }
 }

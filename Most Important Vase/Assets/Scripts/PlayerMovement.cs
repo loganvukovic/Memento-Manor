@@ -29,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private TrailRenderer tr;
 
+    public float maxHealth;
+    public float currentHealth;
+
     public bool inDialogue = false;
     public DialogueManager dialogueManager;
     public float dialogueCooldown = 0.7f;
@@ -47,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         UnityEngine.Application.targetFrameRate = 60;
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -159,6 +163,11 @@ public class PlayerMovement : MonoBehaviour
                 else
                     wallJumpCooldown += Time.deltaTime;
         */
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     private void FixedUpdate()
@@ -223,5 +232,10 @@ public class PlayerMovement : MonoBehaviour
     public bool canAttack()
     {
         return !onWall();
+    }
+
+    void Die()
+    {
+        UnityEngine.Debug.Log("Am ded");
     }
 }
