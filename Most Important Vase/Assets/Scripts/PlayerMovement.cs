@@ -238,4 +238,21 @@ public class PlayerMovement : MonoBehaviour
     {
         UnityEngine.Debug.Log("Am ded");
     }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        UnityEngine.Debug.Log(other);
+        if (other.gameObject.tag == "Pickup")
+        {
+            if(other.gameObject.GetComponent<PickupProperties>().pickupType == "Health")
+            {
+                currentHealth += other.gameObject.GetComponent<PickupProperties>().floatValue;
+            }
+            else if (other.gameObject.GetComponent<PickupProperties>().pickupType == "Damage")
+            {
+                GetComponent<PlayerAttacks>().damage += other.gameObject.GetComponent<PickupProperties>().floatValue;
+            }
+            Destroy(other.gameObject);
+        }
+    }
 }

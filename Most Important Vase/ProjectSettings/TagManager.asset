@@ -9,6 +9,8 @@ TagManager:
   - Ground
   - Enemy
   - Semisolid
+  - Breakable
+  - Pickup
   layers:
   - Default
   - TransparentFX

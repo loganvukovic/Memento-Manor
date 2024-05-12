@@ -74,5 +74,10 @@ public class Projectile : MonoBehaviour
             other.gameObject.GetComponent<EnemyScript>().TakeDamage(damage);
             Destroy(this.gameObject);
         }
+        if (other.tag == "Breakable")
+        {
+            other.gameObject.GetComponent<Breakable>().TakeDamage(damage);
+            Destroy(this.gameObject);
+        }
     }
 }
