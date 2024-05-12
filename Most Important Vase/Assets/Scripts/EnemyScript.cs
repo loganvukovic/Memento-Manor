@@ -24,6 +24,9 @@ public class EnemyScript : MonoBehaviour
     public float movementSpeed;
     private Rigidbody2D rb;
 
+    private float posScaleX;
+    private float posScaleY;
+
     public float health = 5f;
 
     // Start is called before the first frame update
@@ -42,6 +45,9 @@ public class EnemyScript : MonoBehaviour
         }
 
         startingPosition = transform.position;
+
+        posScaleX = transform.localScale.x;
+        posScaleY = transform.localScale.y;
     }
 
     // Update is called once per frame
@@ -55,10 +61,12 @@ public class EnemyScript : MonoBehaviour
             }
             else if (goingLeft && transform.position.x >= startingPosition.x - leftPatrolBound)
             {
+                transform.localScale = new Vector3(posScaleX * -1, posScaleY, 1);
                 rb.velocity = new Vector2(movementSpeed * Time.deltaTime * -1, 0f);
             }
             else if (goingRight && transform.position.x <= startingPosition.x + rightPatrolBound)
             {
+                transform.localScale = new Vector3(posScaleX, posScaleY, 1);
                 rb.velocity = new Vector2(movementSpeed * Time.deltaTime, 0f);
             }
             //failsafe
