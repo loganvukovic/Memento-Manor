@@ -533,6 +533,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a33d7bea1ad0340b55547a28f65085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!70 &414401259
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414401244}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.5}
+  m_Size: {x: 1, y: 2.08}
+  m_Direction: 0
 --- !u!1 &521271570
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,6 +1226,9 @@ MonoBehaviour:
   firingRate: 0.75
   coneBulletCount: 5
   coneAngle: 100
+  waveAmplitude: 0
+  waveFrequency: 0
+  waveUpDown: 0
   player: {fileID: 414401244}
   aimedOffset: {x: 0, y: 0, z: 0}
 --- !u!212 &1007382699
@@ -2590,13 +2628,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1501082170}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 746471569}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &1501082172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2613,11 +2651,14 @@ MonoBehaviour:
   bulletLife: 2.5
   speed: 7
   damage: 5
-  spawnerType: 3
+  spawnerType: 4
   totalShots: 0
   firingRate: 0.75
   coneBulletCount: 5
   coneAngle: 100
+  waveAmplitude: 1.5
+  waveFrequency: 1
+  waveUpDown: 0
   player: {fileID: 414401244}
   aimedOffset: {x: 0, y: 0, z: 0}
 --- !u!212 &1501082173
@@ -3881,6 +3922,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 414401251}
     - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 521271570}
+    - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: jumpPower
       value: 10
       objectReference: {fileID: 0}
@@ -3952,13 +3997,17 @@ PrefabInstance:
       propertyPath: damage
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6532674350829038395, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2730633220710555979, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 414401251}
+    - targetCorrespondingSourceObject: {fileID: 2730633220710555979, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 414401259}
   m_SourcePrefab: {fileID: 100100000, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
 --- !u!1 &2121159305
 GameObject:
@@ -4000,6 +4049,9 @@ MonoBehaviour:
   firingRate: 0.75
   coneBulletCount: 5
   coneAngle: 100
+  waveAmplitude: 0
+  waveFrequency: 0
+  waveUpDown: 0
   player: {fileID: 2730633220710555979, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
   aimedOffset: {x: 0, y: 0, z: 0}
 --- !u!212 &2121159307
