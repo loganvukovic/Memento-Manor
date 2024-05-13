@@ -11,6 +11,9 @@ TagManager:
   - Semisolid
   - Breakable
   - Pickup
+  - Interactable
+  - Talkable
+  - Dialogue
   layers:
   - Default
   - TransparentFX
