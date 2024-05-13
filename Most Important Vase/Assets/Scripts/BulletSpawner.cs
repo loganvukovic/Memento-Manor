@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
 {
-    enum SpawnerType {Straight, Spin, Cone, Aimed}
+    enum SpawnerType {Straight, Spin, Cone, Aimed, Wave}
 
     [Header("Bullet Attributes")]
     public GameObject bullet;
@@ -20,6 +20,9 @@ public class BulletSpawner : MonoBehaviour
     [SerializeField] private float firingRate = 1f;
     [SerializeField] private int coneBulletCount = 3;
     [SerializeField] private float coneAngle = 30f;
+    public float waveAmplitude;
+    public float waveFrequency;
+    public bool waveUpDown;
 
     private GameObject spawnedBullet;
     private float timer = 0f;
@@ -87,6 +90,16 @@ public class BulletSpawner : MonoBehaviour
                 spawnedBullet.GetComponent<Bullet>().speed = speed;
                 spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
                 spawnedBullet.GetComponent<Bullet>().damage = damage;
+                if (spawnerType == SpawnerType.Wave)
+                {
+                    spawnedBullet.GetComponent<Bullet>().isWave = true;
+                    spawnedBullet.GetComponent<Bullet>().waveAmplitude = waveAmplitude;
+                    spawnedBullet.GetComponent<Bullet>().waveFrequency = waveFrequency;
+                    if (waveUpDown)
+                    {
+                        spawnedBullet.GetComponent<Bullet>().waveUpDown = true;
+                    }
+                }
             }
         }
     }

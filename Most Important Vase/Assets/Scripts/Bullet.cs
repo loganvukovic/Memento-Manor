@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -8,6 +9,10 @@ public class Bullet : MonoBehaviour
     public float rotation = 0f;
     public float speed = 1f;
     public float damage = 5f;
+    public bool isWave = false;
+    public float waveAmplitude;
+    public float waveFrequency;
+    public bool waveUpDown;
 
     private Vector2 spawnPoint;
     private float timer = 0f;
@@ -29,8 +34,23 @@ public class Bullet : MonoBehaviour
     private Vector2 Movement(float timer)
     {
         //Moves right according to the bullet's rotation
-        float x = timer * speed * transform.right.x;
-        float y = timer * speed * transform.right.y;
+        float x;
+        float y;
+        if (isWave && !waveUpDown)
+        {
+            x = timer * speed * transform.right.x;
+            y = Mathf.Sin(x * waveFrequency) * waveAmplitude;
+        }
+        else if (isWave && waveUpDown)
+        {
+            y = timer * speed * transform.up.y;
+            x = Mathf.Sin(y * waveFrequency) * waveAmplitude;
+        }
+        else
+        {
+            x = timer * speed * transform.right.x;
+            y = timer * speed * transform.right.y;
+        }
         return new Vector2(x + spawnPoint.x, y + spawnPoint.y);
     }
 
