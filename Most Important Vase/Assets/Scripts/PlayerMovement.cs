@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpCooldown;
     private float horizontalInput;
     public float direction;
+    private Vector3 correctScale;
 
     private bool canDash = true;
     private bool isDashing;
@@ -40,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject camera;
 
+    public Animator interactAnimator;
+    public Animator talkAnimator;
+
     private void Awake()
     {
         //Grab references for rigidbody
@@ -53,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
     {
         UnityEngine.Application.targetFrameRate = 60;
         currentHealth = maxHealth;
+        correctScale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -77,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (inDialogue)
         {
+            body.velocity = new Vector3(0, body.velocity.y, 0);
             return;
         }
         if (isDashing)
@@ -97,12 +103,12 @@ public class PlayerMovement : MonoBehaviour
 
             if (horizontalInput > 0.01f)
             {
-                transform.localScale = Vector3.one;
+                transform.localScale = new Vector3(correctScale.x, correctScale.y, correctScale.z);
                 direction = 1;
             }
             else if (horizontalInput < -0.01f)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(correctScale.x * -1, correctScale.y, correctScale.z);
                 direction = -1;
             }
 
@@ -241,6 +247,35 @@ public class PlayerMovement : MonoBehaviour
     void Die()
     {
         UnityEngine.Debug.Log("Am ded");
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Interactable")
+        {
+            interactAnimator.SetBool("CanInteract", true);
+        }
+        if (other.tag == "Talkable")
+        {
+            talkAnimator.SetBool("CanTalk", true);
+        }
+        if (other.tag == "Dialogue")
+        {
+            other.GetComponent<DialogueTrigger>().TriggerDialogue();
+            Destroy(other.gameObject);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Interactable")
+        {
+            interactAnimator.SetBool("CanInteract", false);
+        }
+        if (other.tag == "Talkable")
+        {
+            talkAnimator.SetBool("CanTalk", false);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D other)

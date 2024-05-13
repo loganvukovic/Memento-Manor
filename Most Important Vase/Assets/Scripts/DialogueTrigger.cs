@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public Dialogue dialogue; 
+    public Dialogue dialogue;
+    public GameObject player;
 
     public void TriggerDialogue()
     {
+        player = GameObject.FindWithTag("Player");
+        player.GetComponent<PlayerMovement>().inDialogue = true;
         FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
 
@@ -16,7 +19,6 @@ public class DialogueTrigger : MonoBehaviour
         if(other.tag == "Player" && Input.GetKey(KeyCode.E) && other.GetComponent<PlayerMovement>().inDialogue == false && other.GetComponent<PlayerMovement>().timeSinceDialogue >= 0.7f)
         {
             TriggerDialogue();
-            other.GetComponent<PlayerMovement>().inDialogue = true;
         }
     }
 }
