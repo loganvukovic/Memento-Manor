@@ -264,6 +264,10 @@ public class PlayerMovement : MonoBehaviour
             other.GetComponent<DialogueTrigger>().TriggerDialogue();
             Destroy(other.gameObject);
         }
+        if (other.tag == "Gauntlet")
+        {
+            other.GetComponent<GauntletTrigger>().StartGauntlet();
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
