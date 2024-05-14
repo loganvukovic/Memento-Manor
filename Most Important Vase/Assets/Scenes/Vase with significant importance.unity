@@ -1229,6 +1229,7 @@ MonoBehaviour:
   waveAmplitude: 0
   waveFrequency: 0
   waveUpDown: 0
+  bulletsInCircle: 0
   player: {fileID: 414401244}
   aimedOffset: {x: 0, y: 0, z: 0}
 --- !u!212 &1007382699
@@ -2651,14 +2652,15 @@ MonoBehaviour:
   bulletLife: 2.5
   speed: 7
   damage: 5
-  spawnerType: 4
-  totalShots: 0
+  spawnerType: 5
+  totalShots: 10
   firingRate: 0.75
   coneBulletCount: 5
   coneAngle: 100
   waveAmplitude: 1.5
   waveFrequency: 1
   waveUpDown: 0
+  bulletsInCircle: 10
   player: {fileID: 414401244}
   aimedOffset: {x: 0, y: 0, z: 0}
 --- !u!212 &1501082173
@@ -3655,6 +3657,7 @@ MonoBehaviour:
     sentences:
     - Wow! A square.
     - Hi I'm a square.
+  player: {fileID: 0}
 --- !u!212 &1670998444
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4052,6 +4055,7 @@ MonoBehaviour:
   waveAmplitude: 0
   waveFrequency: 0
   waveUpDown: 0
+  bulletsInCircle: 0
   player: {fileID: 2730633220710555979, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
   aimedOffset: {x: 0, y: 0, z: 0}
 --- !u!212 &2121159307

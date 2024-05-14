@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
 {
-    enum SpawnerType {Straight, Spin, Cone, Aimed, Wave}
+    enum SpawnerType {Straight, Spin, Cone, Aimed, Wave, Circle}
 
     [Header("Bullet Attributes")]
     public GameObject bullet;
@@ -23,6 +23,7 @@ public class BulletSpawner : MonoBehaviour
     public float waveAmplitude;
     public float waveFrequency;
     public bool waveUpDown;
+    public int bulletsInCircle;
 
     private GameObject spawnedBullet;
     private float timer = 0f;
@@ -77,6 +78,19 @@ public class BulletSpawner : MonoBehaviour
                 for (int i = 0; i < coneBulletCount; i++)
                 {
                     float angle = startAngle + (angleIncrement * i);
+                    Quaternion bulletRotation = Quaternion.Euler(0f, 0f, angle);
+                    spawnedBullet = Instantiate(bullet, transform.position, bulletRotation);
+                    spawnedBullet.GetComponent<Bullet>().speed = speed;
+                    spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                    spawnedBullet.GetComponent<Bullet>().damage = damage;
+                }
+            }
+            else if (spawnerType == SpawnerType.Circle)
+            {
+                float angleIncrement = 360f / bulletsInCircle;
+                for (int i = 0; i < bulletsInCircle; i++)
+                {
+                    float angle = angleIncrement * i;
                     Quaternion bulletRotation = Quaternion.Euler(0f, 0f, angle);
                     spawnedBullet = Instantiate(bullet, transform.position, bulletRotation);
                     spawnedBullet.GetComponent<Bullet>().speed = speed;
