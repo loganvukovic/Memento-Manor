@@ -65,6 +65,11 @@ public class PlayerMovement : MonoBehaviour
     {
         //camera.transform.position = new Vector3(transform.position.x, transform.position.y, camera.transform.position.z);
 
+        if(currentHealth > maxHealth) 
+        {
+        currentHealth = maxHealth;
+        }
+
         if (!inDialogue) 
         {
             dialogueTimer = 0;
