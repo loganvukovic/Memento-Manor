@@ -1224,6 +1224,7 @@ MonoBehaviour:
   spawnerType: 3
   totalShots: 0
   firingRate: 0.75
+  spinSpeed: 0
   coneBulletCount: 5
   coneAngle: 100
   waveAmplitude: 0
@@ -2652,9 +2653,10 @@ MonoBehaviour:
   bulletLife: 2.5
   speed: 7
   damage: 5
-  spawnerType: 5
+  spawnerType: 1
   totalShots: 10
   firingRate: 0.75
+  spinSpeed: 1.45
   coneBulletCount: 5
   coneAngle: 100
   waveAmplitude: 1.5
@@ -4050,6 +4052,7 @@ MonoBehaviour:
   spawnerType: 2
   totalShots: 10
   firingRate: 0.75
+  spinSpeed: 0
   coneBulletCount: 5
   coneAngle: 100
   waveAmplitude: 0

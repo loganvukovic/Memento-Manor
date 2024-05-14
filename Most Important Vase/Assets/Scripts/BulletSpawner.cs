@@ -18,6 +18,7 @@ public class BulletSpawner : MonoBehaviour
     public int totalShots;
     private int shotsLeft;
     [SerializeField] private float firingRate = 1f;
+    public float spinSpeed;
     [SerializeField] private int coneBulletCount = 3;
     [SerializeField] private float coneAngle = 30f;
     public float waveAmplitude;
@@ -43,7 +44,7 @@ public class BulletSpawner : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (spawnerType == SpawnerType.Spin) transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z+1f);
+        if (spawnerType == SpawnerType.Spin) transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z+1f + spinSpeed);
         if (timer >= firingRate && canShoot)
         {
             if (totalShots == 0)
