@@ -26,7 +26,7 @@ public class SemisolidLedge : MonoBehaviour
             collider.enabled = false;
             //UnityEngine.Debug.Log("Gone");
         }
-        else if (player.transform.position.y >= transform.position.y + 0.7 || playerScript.isGrounded())
+        else if (player.transform.position.y >= transform.position.y + 0.5 || playerScript.isGrounded())
         {
             collider.enabled = true;
             //UnityEngine.Debug.Log("Solid");

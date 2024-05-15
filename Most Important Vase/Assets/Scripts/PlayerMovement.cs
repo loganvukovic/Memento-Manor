@@ -44,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
     public Animator interactAnimator;
     public Animator talkAnimator;
 
+    public GameObject permanentDialogue;
+
     private void Awake()
     {
         //Grab references for rigidbody
@@ -267,7 +269,10 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag == "Dialogue")
         {
             other.GetComponent<DialogueTrigger>().TriggerDialogue();
-            Destroy(other.gameObject);
+            if (other.gameObject != permanentDialogue)
+            {
+                Destroy(other.gameObject);
+            }
         }
         if (other.tag == "Gauntlet")
         {
