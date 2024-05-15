@@ -14,14 +14,4 @@ public class VaseEvent : MonoBehaviour
             Destroy(thing);
         }
     }
-    
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }
