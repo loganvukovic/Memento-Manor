@@ -46,6 +46,13 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject permanentDialogue;
 
+    //CharChanges
+
+    public Transform groundCheck;
+    private float jumpForceTime = 0f;
+    public bool canJump;
+    public bool isJumping = false;
+
     private void Awake()
     {
         //Grab references for rigidbody
@@ -66,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //camera.transform.position = new Vector3(transform.position.x, transform.position.y, camera.transform.position.z);
+
 
         if(currentHealth > maxHealth) 
         {
@@ -119,10 +127,43 @@ public class PlayerMovement : MonoBehaviour
                 direction = -1;
             }
 
-            if (Input.GetKey(KeyCode.Space) && isGrounded())
+
+            if(Input.GetKeyDown(KeyCode.Space) && canJump)
+            {
+                canJump = false;
+                isJumping = true;
+            }
+
+            if (Input.GetKey(KeyCode.Space) && isJumping)
+            {
+                body.velocity = new Vector2(body.velocity.x, jumpPower);
+                if (jumpForceTime > 9f)
+                {
+                    isJumping = false;
+                    body.velocity = new Vector2(body.velocity.x, 0f);
+                }
+                else
+                {
+                    jumpForceTime += .3f;
+                }
+            }
+
+            if(isJumping && Input.GetKeyUp(KeyCode.Space))
+            {
+                isJumping = false;
+                body.velocity = new Vector2(body.velocity.x, 0f);
+            }
+
+            if (isGrounded() && !Input.GetKey(KeyCode.Space))
+            {
+                canJump = true;
+                jumpForceTime = 0f;
+            }
+
+            /*if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
             {
                 Jump();
-            }
+            }*/
         }
         /*
                 if (isDashing)
@@ -236,8 +277,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isGrounded()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(polygonCollider.bounds.center, polygonCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
-        return raycastHit.collider != null;
+        return Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
     }
 
     private bool onWall()
