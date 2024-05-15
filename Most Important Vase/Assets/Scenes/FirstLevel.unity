@@ -88658,7 +88658,7 @@ PrefabInstance:
       objectReference: {fileID: 1786962018}
     - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: jumpPower
-      value: 8.7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4888744632249800100, guid: 6f67863871f5aa04baf79b9a241273a6, type: 3}
       propertyPath: maxHealth

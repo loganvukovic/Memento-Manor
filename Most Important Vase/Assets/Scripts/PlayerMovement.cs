@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     private float jumpForceTime = 0f;
     public bool canJump;
+    public bool isJumping = false;
 
     private void Awake()
     {
@@ -127,16 +128,30 @@ public class PlayerMovement : MonoBehaviour
             }
 
 
-            if (Input.GetKey(KeyCode.Space) && canJump)
+            if(Input.GetKeyDown(KeyCode.Space) && canJump)
             {
-                jumpForceTime += .5f;
-                body.velocity = new Vector2(body.velocity.x, jumpForceTime);
-                if(jumpForceTime > 9)
+                canJump = false;
+                isJumping = true;
+            }
+
+            if (Input.GetKey(KeyCode.Space) && isJumping)
+            {
+                body.velocity = new Vector2(body.velocity.x, jumpPower);
+                if (jumpForceTime > 9f)
                 {
-                    canJump = false;
+                    isJumping = false;
+                    body.velocity = new Vector2(body.velocity.x, 0f);
                 }
+                else
+                {
+                    jumpForceTime += .3f;
+                }
+            }
 
-
+            if(isJumping && Input.GetKeyUp(KeyCode.Space))
+            {
+                isJumping = false;
+                body.velocity = new Vector2(body.velocity.x, 0f);
             }
 
             if (isGrounded() && !Input.GetKey(KeyCode.Space))
