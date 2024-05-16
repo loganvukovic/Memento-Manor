@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters;
 using UnityEngine;
 
 public class FollowandSlam : MonoBehaviour
@@ -12,8 +13,14 @@ public class FollowandSlam : MonoBehaviour
     public float resumeDelay = 0.5f;
     public float raiseSpeed = 10f;
 
-    private bool isSlamming = false;
+    public bool isSlamming = false;
     private Vector2 originalPosition;
+
+    public FollowandSlam otherHandScript;
+    public bool myTurn;
+
+    public BossScript bossScript;
+    public GameObject player;
 
     private void Start()
     {
@@ -22,10 +29,21 @@ public class FollowandSlam : MonoBehaviour
 
     private void Update()
     {
-        FollowPlayer();
-        if (!isSlamming && Mathf.Abs(transform.position.x - playerTransform.position.x) < 0.1f)
+        if (myTurn && (bossScript.currentPhase == 1 || bossScript.currentPhase == 4) && !player.GetComponent<PlayerMovement>().inDialogue)
         {
-            StartCoroutine(SlamAfterDelay());
+            if (!isSlamming)
+            {
+                FollowPlayer();
+            }
+            if (!isSlamming && Mathf.Abs(transform.position.x - playerTransform.position.x) < 0.1f)
+            {
+                StartCoroutine(SlamAfterDelay());
+            }
+        }
+        else if (!isSlamming)
+        {
+            StartCoroutine(ReturnToStart());
+
         }
     }
 
@@ -38,15 +56,17 @@ public class FollowandSlam : MonoBehaviour
     private IEnumerator SlamAfterDelay()
     {
         isSlamming = true;
+        Vector2 targetPosition = new Vector2(playerTransform.position.x, transform.position.y - 9);
         yield return new WaitForSeconds(slamDelay);
 
         // Move quickly towards the player
-        Vector2 targetPosition = new Vector2(playerTransform.position.x, transform.position.y);
         while ((Vector2)transform.position != targetPosition)
         {
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, fallSpeed * Time.deltaTime);
             yield return null;
         }
+
+        GetComponent<HandSlamBullets>().ShootBullets();
 
         yield return new WaitForSeconds(resumeDelay);
 
@@ -58,5 +78,16 @@ public class FollowandSlam : MonoBehaviour
         }
 
         isSlamming = false;
+        myTurn = false;
+        otherHandScript.myTurn = true;
+    }
+
+    private IEnumerator ReturnToStart()
+    {
+        while ((Vector2)transform.position != originalPosition)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, originalPosition, raiseSpeed * Time.deltaTime);
+            yield return null;
+        }
     }
 }

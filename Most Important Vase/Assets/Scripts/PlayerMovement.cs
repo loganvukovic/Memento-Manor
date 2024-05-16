@@ -318,6 +318,14 @@ public class PlayerMovement : MonoBehaviour
         {
             other.GetComponent<GauntletTrigger>().StartGauntlet();
         }
+        if(other.tag == "Hands")
+        {
+            if (other.GetComponent<FollowandSlam>().isSlamming)
+            {
+                currentHealth -= 10;
+                UnityEngine.Debug.Log(currentHealth);
+            }
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -347,5 +355,10 @@ public class PlayerMovement : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
+        /*if (other.gameObject.tag == "Hands")
+        {
+            currentHealth -= 10;
+            transform.position = new Vector3(transform.position.x + 3 * direction, transform.position.y + 5, transform.position.z);
+        }*/
     }
 }

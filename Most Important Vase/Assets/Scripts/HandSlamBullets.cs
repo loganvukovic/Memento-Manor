@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class HandSlamBullets : MonoBehaviour
@@ -12,18 +13,27 @@ public class HandSlamBullets : MonoBehaviour
     public float speed = 1f;
     public float damage = 5f;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public GameObject player;
+
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.tag == "Ground")
         {
             ShootBullets();
         }
-    }
+    }*/
 
-    private void ShootBullets()
+    public void ShootBullets()
     {
-
-        float startAngle = transform.eulerAngles.z - (coneAngle / 2);
+        float startAngle;
+        if (player.transform.position.x < transform.position.x)
+        {
+            startAngle = transform.eulerAngles.z - (coneAngle / 2) - 180;
+        }
+        else
+        {
+            startAngle = transform.eulerAngles.z - (coneAngle / 2);
+        }
         float angleIncrement = coneAngle / (numberOfBullets - 1);
         for (int i = 0; i < numberOfBullets; i++)
         {

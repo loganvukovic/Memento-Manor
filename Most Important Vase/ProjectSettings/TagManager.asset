@@ -15,6 +15,7 @@ TagManager:
   - Talkable
   - Dialogue
   - Gauntlet
+  - Hands
   layers:
   - Default
   - TransparentFX

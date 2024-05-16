@@ -45,7 +45,7 @@ public class BulletSpawner : MonoBehaviour
     {
         timer += Time.deltaTime;
         if (spawnerType == SpawnerType.Spin) transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z+1f + spinSpeed);
-        if (timer >= firingRate && canShoot)
+        if (timer >= firingRate && canShoot && player.GetComponent<PlayerMovement>().inDialogue == false)
         {
             if (totalShots == 0)
             {

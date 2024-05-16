@@ -23,7 +23,7 @@ public class BossScript : MonoBehaviour
     {
         foreach (BulletSpawner spawner in phase1Spawners)
         {
-            spawner.enabled = true;
+            spawner.enabled = false;
         }
         foreach (BulletSpawner spawner in phase2Spawners)
         {
@@ -60,7 +60,7 @@ public class BossScript : MonoBehaviour
 
     }
 
-    void PhasePush()
+    public void PhasePush()
     {
         if (currentPhase == 1)
         {
