@@ -53,12 +53,15 @@ public class PlayerMovement : MonoBehaviour
     public bool canJump;
     public bool isJumping = false;
 
+    [SerializeField] private float fallGravityScale = 1.5f; // Adjust this value as needed
+
     private void Awake()
     {
         //Grab references for rigidbody
         body = GetComponent<Rigidbody2D>();
         rb = GetComponent<Rigidbody2D>();
         polygonCollider = GetComponent<CapsuleCollider2D>();
+        body.gravityScale = fallGravityScale;
     }
 
     // Start is called before the first frame update
@@ -225,6 +228,15 @@ public class PlayerMovement : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+        }
+
+        if (!isGrounded() && body.velocity.y < 0)
+        {
+            body.gravityScale = fallGravityScale;
+        }
+        else
+        {
+            body.gravityScale = 1; // Reset gravity scale when grounded or jumping
         }
     }
 
