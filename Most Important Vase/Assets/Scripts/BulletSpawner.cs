@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
 {
-    enum SpawnerType {Straight, Spin, Cone, Aimed, Wave, Circle}
+    enum SpawnerType { Straight, Spin, Cone, Aimed, Wave, Circle, DoubleSpin, Lob } // Added Lob
 
     [Header("Bullet Attributes")]
     public GameObject bullet;
@@ -26,6 +26,13 @@ public class BulletSpawner : MonoBehaviour
     public bool waveUpDown;
     public int bulletsInCircle;
 
+    [Header("DoubleSpin Attributes")]
+    public float doubleSpinAngle = 45f;
+
+    [Header("Lob Attributes")] // Added header
+    public Vector2 lobDirection = new Vector2(1f, 1f).normalized; // Direction of the lob
+    public float lobHeight = 5f; // Height of the lob
+
     private GameObject spawnedBullet;
     private float timer = 0f;
 
@@ -34,17 +41,19 @@ public class BulletSpawner : MonoBehaviour
     public Vector3 aimedOffset;
     private bool canShoot = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         shotsLeft = totalShots;
     }
 
-    // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
-        if (spawnerType == SpawnerType.Spin) transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z+1f + spinSpeed);
+        if (spawnerType == SpawnerType.Spin || spawnerType == SpawnerType.DoubleSpin) // Updated to include DoubleSpin
+        {
+            transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z + spinSpeed);
+        }
+
         if (timer >= firingRate && canShoot && player.GetComponent<PlayerMovement>().inDialogue == false)
         {
             if (totalShots == 0)
@@ -52,7 +61,7 @@ public class BulletSpawner : MonoBehaviour
                 Fire();
                 timer = 0;
             }
-            else if (totalShots > 0 && shotsLeft > 0) 
+            else if (totalShots > 0 && shotsLeft > 0)
             {
                 Fire();
                 timer = 0;
@@ -99,6 +108,41 @@ public class BulletSpawner : MonoBehaviour
                     spawnedBullet.GetComponent<Bullet>().damage = damage;
                 }
             }
+            else if (spawnerType == SpawnerType.DoubleSpin)
+            {
+                Quaternion bulletRotation1 = Quaternion.Euler(0f, 0f, transform.eulerAngles.z - doubleSpinAngle / 2);
+                Quaternion bulletRotation2 = Quaternion.Euler(0f, 0f, transform.eulerAngles.z + doubleSpinAngle / 2);
+
+                spawnedBullet = Instantiate(bullet, transform.position, bulletRotation1);
+                spawnedBullet.GetComponent<Bullet>().speed = speed;
+                spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                spawnedBullet.GetComponent<Bullet>().damage = damage;
+
+                spawnedBullet = Instantiate(bullet, transform.position, bulletRotation2);
+                spawnedBullet.GetComponent<Bullet>().speed = speed;
+                spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                spawnedBullet.GetComponent<Bullet>().damage = damage;
+            }
+            else if (spawnerType == SpawnerType.Lob) // Added Lob case
+            {
+                Vector2 startPos = transform.position;
+
+                float lobTime = Mathf.Sqrt(2f * lobHeight / Physics2D.gravity.magnitude);
+                float lobSpeedX = (lobDirection.normalized * speed).x;
+                float lobSpeedY = lobTime * Physics2D.gravity.magnitude;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    float offsetX = i - 1;
+                    Vector2 offset = new Vector2(offsetX, 0f).normalized * 0.5f;
+                    Vector2 initialVelocity = new Vector2(lobSpeedX, lobSpeedY) + offset;
+
+                    spawnedBullet = Instantiate(bullet, startPos, Quaternion.identity);
+                    spawnedBullet.GetComponent<Rigidbody2D>().velocity = initialVelocity;
+                    spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                    spawnedBullet.GetComponent<Bullet>().damage = damage;
+                }
+            }
             else
             {
                 spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
@@ -134,25 +178,4 @@ public class BulletSpawner : MonoBehaviour
             canShoot = false;
         }
     }
-
-    /*if (bullet)
-        {
-            if (spawnerType == SpawnerType.Cone)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    float angle = transform.eulerAngles.z - coneAngle / 2 + (coneAngle / 2 * i);
-                    Quaternion bulletRotation = Quaternion.Euler(0f, 0f, angle);
-                    spawnedBullet = Instantiate(bullet, transform.position, bulletRotation);
-                    spawnedBullet.GetComponent<Bullet>().speed = speed;
-                    spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
-                }
-            }
-            else
-            {
-                spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
-                spawnedBullet.GetComponent<Bullet>().speed = speed;
-                spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
-            }
-        }*/
 }
