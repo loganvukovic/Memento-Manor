@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canJump;
     public bool isJumping = false;
 
-    [SerializeField] private float fallGravityScale = 1.5f; // Adjust this value as needed
+    [SerializeField] private float maxFallSpeed = 1.5f; 
 
     private void Awake()
     {
@@ -61,7 +61,6 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         rb = GetComponent<Rigidbody2D>();
         polygonCollider = GetComponent<CapsuleCollider2D>();
-        body.gravityScale = fallGravityScale;
     }
 
     // Start is called before the first frame update
@@ -230,13 +229,9 @@ public class PlayerMovement : MonoBehaviour
             Die();
         }
 
-        if (!isGrounded() && body.velocity.y < 0)
+        if (body.velocity.y < maxFallSpeed * -1 && !isGrounded())
         {
-            body.gravityScale = fallGravityScale;
-        }
-        else
-        {
-            body.gravityScale = 1; // Reset gravity scale when grounded or jumping
+            body.velocity = new Vector2(body.velocity.x, maxFallSpeed * -1);
         }
     }
 
