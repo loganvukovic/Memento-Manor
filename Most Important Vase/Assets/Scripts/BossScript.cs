@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BossScript : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class BossScript : MonoBehaviour
 
     public Image healthBar;
     public bool activeBoss = false;
+
+    public string bossName;
+    public TextMeshProUGUI nameText;
 
 
     void Start()
@@ -56,6 +60,7 @@ public class BossScript : MonoBehaviour
         if(activeBoss)
         {
             healthBar.fillAmount = GetComponent<EnemyScript>().health / 100f;
+            nameText.text = bossName;
         }
         //UnityEngine.Debug.Log(GetComponent<EnemyScript>().health);
         //UnityEngine.Debug.Log(GetComponent<EnemyScript>().health - (phaseHealth * currentPhase));
