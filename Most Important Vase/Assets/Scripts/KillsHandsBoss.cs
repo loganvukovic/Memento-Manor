@@ -6,6 +6,7 @@ public class KillsHandsBoss : MonoBehaviour
 {
     public BoxCollider2D[] invisWalls;
     public Animator healthAnim;
+    public BossScript bossScript;
 
     // Start is called before the first frame update
     void Start()
@@ -26,5 +27,6 @@ public class KillsHandsBoss : MonoBehaviour
             wall.enabled = false;
         }
         healthAnim.SetBool("inFight", false);
+        bossScript.activeBoss = false;
     }
 }

@@ -8,6 +8,7 @@ public class BossTrigger : MonoBehaviour
     public BoxCollider2D[] invisWalls;
     public Animator healthAnim;
     public FollowandSlam[] handScripts;
+    public BurrowScript burrowScript;
 
 
     void Start()
@@ -26,6 +27,7 @@ public class BossTrigger : MonoBehaviour
         if (other.tag == "Player")
         {
             bossScript.PhasePush();
+            bossScript.activeBoss = true;
             foreach (BoxCollider2D wall in invisWalls) 
             {
                 wall.enabled = true;
@@ -37,6 +39,10 @@ public class BossTrigger : MonoBehaviour
                 {
                     hand.enabled = true;
                 }
+            }
+            if (burrowScript != null)
+            {
+                burrowScript.enabled = true;   
             }
         }
     }

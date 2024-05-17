@@ -17,6 +17,8 @@ public class BurrowScript : MonoBehaviour
     public float timeSinceBurrow;
     public GameObject player;
 
+    public BossScript bossScript;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,7 @@ public class BurrowScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!player.GetComponent<PlayerMovement>().inDialogue)
+        if (!player.GetComponent<PlayerMovement>().inDialogue && (bossScript.currentPhase == 1 || bossScript.currentPhase == 2 || bossScript.currentPhase == 3 || bossScript.currentPhase == 4))
         {
             if (!isRaising && timeSinceBurrow >= burrowCooldown)
             {

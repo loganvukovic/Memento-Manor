@@ -17,6 +17,7 @@ public class BossScript : MonoBehaviour
     public BulletSpawner[] phase4Spawners;
 
     public Image healthBar;
+    public bool activeBoss = false;
 
 
     void Start()
@@ -52,8 +53,10 @@ public class BossScript : MonoBehaviour
             currentPhase++;
             PhasePush();
         }
-
-        healthBar.fillAmount = GetComponent<EnemyScript>().health / 100f;
+        if(activeBoss)
+        {
+            healthBar.fillAmount = GetComponent<EnemyScript>().health / 100f;
+        }
         //UnityEngine.Debug.Log(GetComponent<EnemyScript>().health);
         //UnityEngine.Debug.Log(GetComponent<EnemyScript>().health - (phaseHealth * currentPhase));
 
