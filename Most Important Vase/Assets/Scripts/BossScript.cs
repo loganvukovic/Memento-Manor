@@ -62,6 +62,10 @@ public class BossScript : MonoBehaviour
             healthBar.fillAmount = GetComponent<EnemyScript>().health / 100f;
             nameText.text = bossName;
         }
+        if(!activeBoss)
+        {
+            GetComponent<EnemyScript>().health = 100;
+        }
         //UnityEngine.Debug.Log(GetComponent<EnemyScript>().health);
         //UnityEngine.Debug.Log(GetComponent<EnemyScript>().health - (phaseHealth * currentPhase));
 
