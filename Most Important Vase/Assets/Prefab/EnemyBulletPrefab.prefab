@@ -107,6 +107,7 @@ MonoBehaviour:
   waveAmplitude: 0
   waveFrequency: 0
   waveUpDown: 0
+  isLob: 0
 --- !u!95 &2549876151620006614
 Animator:
   serializedVersion: 5

@@ -138,7 +138,8 @@ public class BulletSpawner : MonoBehaviour
                     Vector2 initialVelocity = new Vector2(lobSpeedX, lobSpeedY) + offset;
 
                     spawnedBullet = Instantiate(bullet, startPos, Quaternion.identity);
-                    spawnedBullet.GetComponent<Rigidbody2D>().velocity = initialVelocity;
+                    //spawnedBullet.GetComponent<Rigidbody2D>().gravityScale = 1f;
+                    //spawnedBullet.GetComponent<Rigidbody2D>().velocity = initialVelocity;
                     spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
                     spawnedBullet.GetComponent<Bullet>().damage = damage;
                 }

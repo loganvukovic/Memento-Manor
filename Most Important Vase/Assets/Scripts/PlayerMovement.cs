@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
 
 public class PlayerMovement : MonoBehaviour
@@ -53,7 +54,11 @@ public class PlayerMovement : MonoBehaviour
     public bool canJump;
     public bool isJumping = false;
 
-    [SerializeField] private float maxFallSpeed = 1.5f; 
+    [SerializeField] private float maxFallSpeed = 1.5f;
+
+    private Vector3 currentSpawn;
+
+    public UnityEngine.UI.Image healthBar;
 
     private void Awake()
     {
@@ -96,6 +101,8 @@ public class PlayerMovement : MonoBehaviour
             dialogueManager.DisplayNextSentence();
             dialogueTimer = 0;
         }
+
+        healthBar.fillAmount = currentHealth / 100f;
 
         if (inDialogue)
         {
@@ -332,6 +339,15 @@ public class PlayerMovement : MonoBehaviour
                 currentHealth -= 10;
                 UnityEngine.Debug.Log(currentHealth);
             }
+        }
+        if(other.tag == "Spawn")
+        {
+            currentSpawn = other.transform.position;
+        }
+        if (other.tag == "Pit")
+        {
+            currentHealth -= 5;
+            transform.position = currentSpawn; 
         }
     }
 

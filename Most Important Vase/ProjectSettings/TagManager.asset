@@ -16,6 +16,8 @@ TagManager:
   - Dialogue
   - Gauntlet
   - Hands
+  - Spawn
+  - Pit
   layers:
   - Default
   - TransparentFX

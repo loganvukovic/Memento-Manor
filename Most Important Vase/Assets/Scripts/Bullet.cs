@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour
 
     private Vector2 spawnPoint;
     private float timer = 0f;
+    public bool isLob;
 
     // Start is called before the first frame update
     void Start()
