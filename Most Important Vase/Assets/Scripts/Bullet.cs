@@ -13,15 +13,23 @@ public class Bullet : MonoBehaviour
     public float waveAmplitude;
     public float waveFrequency;
     public bool waveUpDown;
+    public bool isRebound; // Added isRebound property
+    public int reboundCount; // Added reboundCount property
+    public float reboundDistance; // Added reboundDistance property
+    public float reboundAngle; // Added reboundAngle property
 
     private Vector2 spawnPoint;
     private float timer = 0f;
     public bool isLob;
 
+    private Vector2 initialVelocity; // Added initialVelocity property
+    private int currentReboundCount; // Added currentReboundCount property
+
     // Start is called before the first frame update
     void Start()
     {
         spawnPoint = new Vector2(transform.position.x, transform.position.y);
+        currentReboundCount = 0; // Initialize currentReboundCount
     }
 
     // Update is called once per frame
@@ -30,6 +38,24 @@ public class Bullet : MonoBehaviour
         if (timer > bulletLife) Destroy(this.gameObject);
         timer += Time.deltaTime;
         transform.position = Movement(timer);
+
+        if (isRebound && currentReboundCount < reboundCount) // Check if rebound behavior is enabled and not exceeded rebound count
+        {
+            float distance = Vector2.Distance(spawnPoint, transform.position);
+            if (distance >= reboundDistance) // Check if distance traveled exceeds rebound distance
+            {
+                // Reverse direction based on rebound angle
+                initialVelocity = Quaternion.Euler(0, 0, reboundAngle) * -initialVelocity;
+                currentReboundCount++; // Increment rebound count
+            }
+        }
+
+        transform.position = (Vector2)transform.position + initialVelocity * Time.deltaTime;
+    }
+
+    public void SetInitialVelocity(Vector2 velocity)
+    {
+        initialVelocity = velocity;
     }
 
     private Vector2 Movement(float timer)
@@ -72,4 +98,5 @@ public class Bullet : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
 }

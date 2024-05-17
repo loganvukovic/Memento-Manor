@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
 {
-    enum SpawnerType { Straight, Spin, Cone, Aimed, Wave, Circle, DoubleSpin, Lob } // Added Lob
+    enum SpawnerType { Straight, Spin, Cone, Aimed, Wave, Circle, DoubleSpin, Lob, Rebound } // Added Rebound
 
     [Header("Bullet Attributes")]
     public GameObject bullet;
@@ -32,6 +32,11 @@ public class BulletSpawner : MonoBehaviour
     [Header("Lob Attributes")] // Added header
     public Vector2 lobDirection = new Vector2(1f, 1f).normalized; // Direction of the lob
     public float lobHeight = 5f; // Height of the lob
+
+    [Header("Rebound Attributes")] // Added header
+    public int reboundCount = 3; // Number of rebounds
+    public float reboundDistance = 5f; // Distance traveled before rebounding
+    public float reboundAngle = 0f; // Angle at which the shot comes back
 
     private GameObject spawnedBullet;
     private float timer = 0f;
@@ -138,11 +143,28 @@ public class BulletSpawner : MonoBehaviour
                     Vector2 initialVelocity = new Vector2(lobSpeedX, lobSpeedY) + offset;
 
                     spawnedBullet = Instantiate(bullet, startPos, Quaternion.identity);
-                    //spawnedBullet.GetComponent<Rigidbody2D>().gravityScale = 1f;
-                    //spawnedBullet.GetComponent<Rigidbody2D>().velocity = initialVelocity;
-                    spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
-                    spawnedBullet.GetComponent<Bullet>().damage = damage;
+                    Bullet bulletScript = spawnedBullet.GetComponent<Bullet>();
+                    bulletScript.speed = speed; // Set speed
+                    bulletScript.bulletLife = bulletLife; // Set bulletLife
+                    bulletScript.damage = damage; // Set damage
                 }
+            }
+            else if (spawnerType == SpawnerType.Rebound) // Added Rebound case
+            {
+                Vector2 startPos = transform.position;
+                Vector2 direction = transform.right;
+
+                spawnedBullet = Instantiate(bullet, startPos, Quaternion.identity);
+                Bullet bulletScript = spawnedBullet.GetComponent<Bullet>();
+
+                bulletScript.speed = speed;
+                bulletScript.bulletLife = bulletLife;
+                bulletScript.damage = damage;
+                bulletScript.isRebound = true; // Set rebound behavior
+                bulletScript.reboundCount = reboundCount; // Set rebound count
+                bulletScript.reboundDistance = reboundDistance; // Set rebound distance
+                bulletScript.reboundAngle = reboundAngle; // Set rebound angle
+                bulletScript.SetInitialVelocity(direction * speed); // Set initial velocity
             }
             else
             {
