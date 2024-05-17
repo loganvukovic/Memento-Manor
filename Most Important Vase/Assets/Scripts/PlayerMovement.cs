@@ -47,6 +47,9 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject permanentDialogue;
 
+    public float invincibleTime;
+    public float timeSinceDamage;
+
     //CharChanges
 
     public Transform groundCheck;
@@ -101,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
             dialogueManager.DisplayNextSentence();
             dialogueTimer = 0;
         }
+
+        timeSinceDamage += Time.deltaTime;
 
         healthBar.fillAmount = currentHealth / 100f;
 

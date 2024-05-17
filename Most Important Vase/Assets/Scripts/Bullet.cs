@@ -63,7 +63,12 @@ public class Bullet : MonoBehaviour
         }*/
         if (other.tag == "Player")
         {
-            other.GetComponent<PlayerMovement>().currentHealth -= damage;
+            if (other.GetComponent<PlayerMovement>().timeSinceDamage > other.GetComponent<PlayerMovement>().invincibleTime)
+            {
+                other.GetComponent<PlayerMovement>().currentHealth -= damage;
+                other.GetComponent<PlayerMovement>().timeSinceDamage = 0;
+            }
+
             Destroy(this.gameObject);
         }
     }
