@@ -383,6 +383,13 @@ public class PlayerMovement : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
+        if (other.gameObject.tag == "Enemy")
+        {
+            if(timeSinceDamage > invincibleTime)
+            {
+                currentHealth -= 5;
+            }
+        }
         /*if (other.gameObject.tag == "Hands")
         {
             currentHealth -= 10;
