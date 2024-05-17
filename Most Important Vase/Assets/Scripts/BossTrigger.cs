@@ -33,7 +33,10 @@ public class BossTrigger : MonoBehaviour
             healthAnim.SetBool("inFight", true);
             foreach (FollowandSlam hand in handScripts)
             {
-                hand.enabled = true;
+                if(hand != null)
+                {
+                    hand.enabled = true;
+                }
             }
         }
     }
