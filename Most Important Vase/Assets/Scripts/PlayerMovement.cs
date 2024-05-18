@@ -396,4 +396,12 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(transform.position.x + 3 * direction, transform.position.y + 5, transform.position.z);
         }*/
     }
+
+    void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Moving")
+        {
+            transform.position = new Vector3(transform.position.x + other.gameObject.GetComponent<MovingPlatform>().distanceMoved /*(other.gameObject.GetComponent<MovingPlatform>().timeSinceSpawn * other.gameObject.GetComponent<MovingPlatform>().speed * transform.right.x)*/, transform.position.y, transform.position.z);
+        }
+    }
 }

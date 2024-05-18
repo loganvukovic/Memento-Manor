@@ -18,6 +18,7 @@ TagManager:
   - Hands
   - Spawn
   - Pit
+  - Moving
   layers:
   - Default
   - TransparentFX
