@@ -9,6 +9,8 @@ public class BossTrigger : MonoBehaviour
     public Animator healthAnim;
     public FollowandSlam[] handScripts;
     public BurrowScript burrowScript;
+    public SpriteRenderer bossSprite;
+    public RisingDeath risingScript;
 
 
     void Start()
@@ -43,6 +45,14 @@ public class BossTrigger : MonoBehaviour
             if (burrowScript != null)
             {
                 burrowScript.enabled = true;   
+            }
+            if(bossSprite != null)
+            {
+                bossSprite.enabled = true;
+            }
+            if (risingScript != null)
+            {
+                risingScript.enabled = false;
             }
         }
     }

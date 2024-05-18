@@ -33,6 +33,7 @@ public class TeleportAndShoot : MonoBehaviour
     private IEnumerator Teleport()
     {
         GetComponent<SpriteRenderer>().enabled = true;
+        Shoot();
         yield return new WaitForSeconds(teleportCooldown);
         foreach (Transform point in telepoints)
         {

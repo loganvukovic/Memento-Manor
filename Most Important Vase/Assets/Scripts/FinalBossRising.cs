@@ -6,6 +6,7 @@ public class FinalBossRising : MonoBehaviour
 {
     public RisingDeath risingScript;
     public TeleportAndShoot teleportScript;
+    public SpriteRenderer wizard;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class FinalBossRising : MonoBehaviour
         {
             risingScript.enabled = true;
             teleportScript.enabled = true;
+            wizard.enabled = false;
         }
     }
 }
