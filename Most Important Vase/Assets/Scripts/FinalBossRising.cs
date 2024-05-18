@@ -5,6 +5,7 @@ using UnityEngine;
 public class FinalBossRising : MonoBehaviour
 {
     public RisingDeath risingScript;
+    public TeleportAndShoot teleportScript;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class FinalBossRising : MonoBehaviour
         if(other.tag == "Player")
         {
             risingScript.enabled = true;
+            teleportScript.enabled = true;
         }
     }
 }
