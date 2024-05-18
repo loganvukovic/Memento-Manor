@@ -49,6 +49,7 @@ public class TeleportAndShoot : MonoBehaviour
             Shoot();
             yield return new WaitForSeconds(teleportCooldown);
         }
+        StartCoroutine(Teleport());
     }
 
     private void Shoot()
