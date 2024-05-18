@@ -11,6 +11,8 @@ public class BossTrigger : MonoBehaviour
     public BurrowScript burrowScript;
     public SpriteRenderer bossSprite;
     public RisingDeath risingScript;
+    public TeleportAndShoot fakeWizard;
+    public TeleportAndShoot realWizard;
 
 
     void Start()
@@ -53,6 +55,14 @@ public class BossTrigger : MonoBehaviour
             if (risingScript != null)
             {
                 risingScript.enabled = false;
+            }
+            if (fakeWizard != null)
+            {
+                fakeWizard.enabled = false;
+            }
+            if (realWizard != null)
+            {
+                realWizard.enabled = true;
             }
         }
     }

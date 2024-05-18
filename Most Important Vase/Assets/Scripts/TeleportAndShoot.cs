@@ -18,20 +18,27 @@ public class TeleportAndShoot : MonoBehaviour
     public float speed = 1f;
     public float damage = 5f;
 
+    public bool isTeleporting = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        if(!player.GetComponent<PlayerMovement>().inDialogue)
         StartCoroutine(Teleport());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!isTeleporting)
+        {
+            StartCoroutine(Teleport());
+        }
     }
 
     private IEnumerator Teleport()
     {
+        isTeleporting = true;
         GetComponent<SpriteRenderer>().enabled = true;
         Shoot();
         yield return new WaitForSeconds(teleportCooldown);
