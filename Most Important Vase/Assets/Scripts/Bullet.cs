@@ -24,12 +24,14 @@ public class Bullet : MonoBehaviour
 
     private Vector2 initialVelocity; // Added initialVelocity property
     private int currentReboundCount; // Added currentReboundCount property
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         spawnPoint = new Vector2(transform.position.x, transform.position.y);
         currentReboundCount = 0; // Initialize currentReboundCount
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -51,6 +53,10 @@ public class Bullet : MonoBehaviour
         }
 
         transform.position = (Vector2)transform.position + initialVelocity * Time.deltaTime;
+        if(gameManager.gameOver)
+        {
+            DestroyBullet();
+        }    
     }
 
     public void SetInitialVelocity(Vector2 velocity)
@@ -99,4 +105,8 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    void DestroyBullet()
+    {
+        Destroy(this.gameObject);
+    }
 }

@@ -80,6 +80,18 @@ public class BossScript : MonoBehaviour
             {
                 spawner.enabled = true;
             }
+            foreach (BulletSpawner spawner in phase2Spawners)
+            {
+                spawner.enabled = false;
+            }
+            foreach (BulletSpawner spawner in phase3Spawners)
+            {
+                spawner.enabled = false;
+            }
+            foreach (BulletSpawner spawner in phase4Spawners)
+            {
+                spawner.enabled = false;
+            }
         }
         if (currentPhase == 2)
         {

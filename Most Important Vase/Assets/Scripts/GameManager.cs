@@ -56,7 +56,16 @@ public class GameManager : MonoBehaviour
             if (boss != null)
             {
                 boss.currentPhase = 1;
+                if(boss.activeBoss)
+                {
+                    boss.PhasePush();
+                }
             }
         }
+        risingFloor.transform.position = new Vector3(574.71f, -9.1f, -0.2674881f);
+        risingFloor.GetComponent<RisingDeath>().timeSinceSpawn = 0;
+        fakeWizard.transform.position = new Vector3(590.71f, 15.24f, -0.1353276f);
+        fakeWizard.GetComponent<TeleportAndShoot>().StopAllCoroutines();
+        fakeWizard.GetComponent<TeleportAndShoot>().isTeleporting = false;
     }
 }
