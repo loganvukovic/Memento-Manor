@@ -63,6 +63,8 @@ public class PlayerMovement : MonoBehaviour
 
     public UnityEngine.UI.Image healthBar;
 
+    public GameManager gameManager;
+
     private void Awake()
     {
         //Grab references for rigidbody
@@ -83,7 +85,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //camera.transform.position = new Vector3(transform.position.x, transform.position.y, camera.transform.position.z);
-
+        /*if (gameManager.gameOver)
+        {
+            return;
+        }*/
 
         if(currentHealth > maxHealth) 
         {
@@ -238,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            //Die();
         }
 
         if (body.velocity.y < maxFallSpeed * -1 && !isGrounded())
