@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     private Rigidbody2D body;
     private CapsuleCollider2D polygonCollider;
-    private float wallJumpCooldown;
+    public float wallJumpCooldown;
     private float horizontalInput;
     public float direction;
     private Vector3 correctScale;
@@ -53,9 +53,14 @@ public class PlayerMovement : MonoBehaviour
     //CharChanges
 
     public Transform groundCheck;
+    public Transform wallCheck;
     private float jumpForceTime = 0f;
-    public bool canJump;
-    public bool isJumping = false;
+    private bool canJump;
+    private bool isJumping = false;
+    private bool wallTimerRunning = false;
+    public float wallJumpBoost = 5f;
+    private float wallTimer = 0f;
+    private bool wallJumping = false;
 
     [SerializeField] private float maxFallSpeed = 1.5f;
 
@@ -107,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
         timeSinceDamage += Time.deltaTime;
 
-        healthBar.fillAmount = currentHealth / 100f;
+        //healthBar.fillAmount = currentHealth / 100f;
 
         if (inDialogue)
         {
@@ -142,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
 
-            if(Input.GetKeyDown(KeyCode.Space) && canJump)
+            if (Input.GetKeyDown(KeyCode.Space) && canJump && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.DownArrow)) 
             {
                 canJump = false;
                 isJumping = true;
@@ -151,6 +156,14 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.Space) && isJumping)
             {
                 body.velocity = new Vector2(body.velocity.x, jumpPower);
+                if (wallJumping)
+                {
+                    body.velocity = new Vector2(wallJumpBoost* transform.localScale.x * -1f,body.velocity.y);
+                }
+                if(jumpForceTime > 4f)
+                {
+                    wallJumping = false;
+                }
                 if (jumpForceTime > 9f)
                 {
                     isJumping = false;
@@ -165,7 +178,11 @@ public class PlayerMovement : MonoBehaviour
             if(isJumping && Input.GetKeyUp(KeyCode.Space))
             {
                 isJumping = false;
-                body.velocity = new Vector2(body.velocity.x, 0f);
+                if (wallJumping)
+                {
+                    wallJumping = false;
+                }
+                body.velocity = new Vector2(body.velocity.x, 0.5f);
             }
 
             if (isGrounded() && !Input.GetKey(KeyCode.Space))
@@ -174,10 +191,20 @@ public class PlayerMovement : MonoBehaviour
                 jumpForceTime = 0f;
             }
 
-            /*if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+            if (!isGrounded() && onWall() && !wallTimerRunning && Input.GetKeyDown(KeyCode.Space))
             {
-                Jump();
-            }*/
+                wallJump(transform.localScale.x);
+            }
+
+            if (wallTimerRunning)
+            {
+                wallTimer += 0.01f;
+            }
+            if(wallTimer >= wallJumpCooldown)
+            {
+                wallTimerRunning = false;
+            }
+
         }
         /*
                 if (isDashing)
@@ -245,6 +272,7 @@ public class PlayerMovement : MonoBehaviour
         {
             body.velocity = new Vector2(body.velocity.x, maxFallSpeed * -1);
         }
+
     }
 
     private void FixedUpdate()
@@ -277,6 +305,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void wallJump(float direction)
+    {
+        jumpForceTime = 0f;
+        wallTimer = 0f;
+        isJumping = true;
+        wallJumping = true;
+        canJump = false;
+        wallTimerRunning = true;
+        body.AddForce(new Vector2(0f, 20f));
+        print("walljumped");
+    }
+
     private IEnumerator Dash()
     {
         canDash = false;
@@ -301,8 +341,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool onWall()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(polygonCollider.bounds.center, polygonCollider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
-        return raycastHit.collider != null;
+        return Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, .3f), 0f, wallLayer);
     }
 
     public bool canAttack()
