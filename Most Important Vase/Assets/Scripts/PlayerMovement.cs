@@ -354,6 +354,11 @@ public class PlayerMovement : MonoBehaviour
             currentHealth -= 5;
             transform.position = currentSpawn; 
         }
+        if(other.tag == "Lava")
+        {
+            body.velocity = new Vector2(body.velocity.x, 15);
+            currentHealth -= 10;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
