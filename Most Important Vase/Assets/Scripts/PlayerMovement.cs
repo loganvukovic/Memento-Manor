@@ -243,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            //Die();
+            Die();
         }
 
         if (body.velocity.y < maxFallSpeed * -1 && !isGrounded())
@@ -317,7 +317,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
-        UnityEngine.Debug.Log("Am ded");
+        gameManager.GameOver();
+    }
+
+    public void Respawn()
+    {
+        transform.position = currentSpawn;
     }
 
     void OnTriggerEnter2D(Collider2D other)

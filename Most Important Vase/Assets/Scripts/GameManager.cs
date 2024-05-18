@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
     public PlayerMovement playerScript;
     public GameObject gameOverScreen;
     public bool gameOver = false;
+    public EnemyScript[] bosses;
+    public BossScript[] bossScripts;
+    public GameObject risingFloor;
+    public GameObject fakeWizard;
 
     // Start is called before the first frame update
     void Start()
@@ -19,22 +23,40 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerScript.currentHealth <= 0)
-        {
-            GameOver();
-        }
+        
     }
 
-    void GameOver()
+    public void GameOver()
     {
-        Time.timeScale = 0f;
-        gameOverScreen.SetActive(true);
-        //gameOver = true;
+        if (Time.timeScale != 0 && !gameOver)
+        {
+            gameOver = true;
+            Time.timeScale = 0f;
+            gameOverScreen.SetActive(true);
+        }
     }
 
     public void Continue()
     {
         Time.timeScale = 1f;
+        playerScript.currentHealth = 100;
         UnityEngine.Debug.Log(Time.timeScale);
+        gameOverScreen.SetActive(false);
+        gameOver = false;
+        playerScript.Respawn();
+        foreach (EnemyScript boss in bosses)
+        {
+            if (boss != null)
+            {
+                boss.health = 100;
+            }
+        }
+        foreach (BossScript boss in bossScripts)
+        {
+            if (boss != null)
+            {
+                boss.currentPhase = 1;
+            }
+        }
     }
 }
