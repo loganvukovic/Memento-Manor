@@ -17,7 +17,7 @@ public class TeleportPlayer : MonoBehaviour
         {
             // Teleport the player to the destination
             other.transform.position = teleportDestination.position;
-            spriteRenderer.sprite = backgroundSprite;
+            //spriteRenderer.sprite = backgroundSprite;
             invisWall.enabled = true;
         }
     }

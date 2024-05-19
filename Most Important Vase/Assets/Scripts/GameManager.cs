@@ -41,10 +41,10 @@ public class GameManager : MonoBehaviour
             Unpause();
         }
 
-        if(score < 0)
+        /*if(score < 0)
         {
             score = 0;
-        }
+        }*/
     }
 
     public void GameOver()
