@@ -8,6 +8,7 @@ public class TeleportPlayer : MonoBehaviour
     public Transform teleportDestination;
     public SpriteRenderer spriteRenderer;
     public Sprite backgroundSprite;
+    public BoxCollider2D invisWall;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -17,6 +18,7 @@ public class TeleportPlayer : MonoBehaviour
             // Teleport the player to the destination
             other.transform.position = teleportDestination.position;
             spriteRenderer.sprite = backgroundSprite;
+            invisWall.enabled = true;
         }
     }
 }
