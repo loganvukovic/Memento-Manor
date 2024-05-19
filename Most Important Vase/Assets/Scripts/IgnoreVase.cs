@@ -5,6 +5,7 @@ using UnityEngine;
 public class IgnoreVase : MonoBehaviour
 {
     public GameObject[] goodPathObjects;
+    public Breakable vaseScript;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -16,6 +17,10 @@ public class IgnoreVase : MonoBehaviour
                 {
                     Destroy(thing);
                 }
+            }
+            if (vaseScript != null)
+            {
+                vaseScript.destroyable = false;
             }
         }
     }

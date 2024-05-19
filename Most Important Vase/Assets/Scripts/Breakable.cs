@@ -19,6 +19,7 @@ public class Breakable : MonoBehaviour
     public string healthMissingType;
     public string desperationType;
     private GameObject spawnedObject;
+    public bool destroyable = true;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,10 @@ public class Breakable : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if(!destroyable)
+        {
+            return;
+        }
         health -= damage;
         if (health <= 0f)
         {
