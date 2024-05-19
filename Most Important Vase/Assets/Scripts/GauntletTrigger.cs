@@ -30,6 +30,6 @@ public class GauntletTrigger : MonoBehaviour
             UnityEngine.Debug.Log("Cool");
             range.GetComponent<CircleCollider2D>().enabled = true;
         }
-        Destroy(this.gameObject);
+        GetComponent<BoxCollider2D>().enabled = false;
     }
 }

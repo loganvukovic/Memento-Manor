@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public BossScript[] bossScripts;
     public GameObject risingFloor;
     public GameObject fakeWizard;
+    public BoxCollider2D gauntletTrigger;
+    public BulletSpawner[] gauntletSpawners;
+    public CircleCollider2D[] gauntletRanges;
 
     // Start is called before the first frame update
     void Start()
@@ -67,5 +70,15 @@ public class GameManager : MonoBehaviour
         fakeWizard.transform.position = new Vector3(590.71f, 15.24f, -0.1353276f);
         fakeWizard.GetComponent<TeleportAndShoot>().StopAllCoroutines();
         fakeWizard.GetComponent<TeleportAndShoot>().isTeleporting = false;
+        gauntletTrigger.enabled = true;
+
+        foreach (CircleCollider2D collider in gauntletRanges)
+        {
+            collider.enabled = false;
+        }
+        foreach (BulletSpawner spawner in gauntletSpawners)
+        {
+            spawner.shotsLeft = spawner.totalShots;
+        }
     }
 }

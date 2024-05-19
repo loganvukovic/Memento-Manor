@@ -16,7 +16,7 @@ public class BulletSpawner : MonoBehaviour
     [Header("Spawner Attributes")]
     [SerializeField] private SpawnerType spawnerType;
     public int totalShots;
-    private int shotsLeft;
+    public int shotsLeft;
     [SerializeField] private float firingRate = 1f;
     public float spinSpeed;
     [SerializeField] private int coneBulletCount = 3;
