@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -99,6 +100,11 @@ public class GameManager : MonoBehaviour
         {
             spawner.shotsLeft = spawner.totalShots;
         }
+    }
+
+    public void ReturnToTitle()
+    {
+        SceneManager.LoadScene(0);
     }
 
     void Pause()
