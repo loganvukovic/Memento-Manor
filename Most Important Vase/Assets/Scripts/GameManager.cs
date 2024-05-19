@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         {
             if (boss != null)
             {
-                boss.health = 100;
+                boss.health = boss.GetComponent<BossScript>().startingHealth;
             }
         }
         foreach (BossScript boss in bossScripts)

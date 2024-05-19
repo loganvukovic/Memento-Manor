@@ -10,7 +10,7 @@ public class BossScript : MonoBehaviour
     public int phaseCount;
     public int currentPhase;
     private float phaseHealth;
-    private float startingHealth;
+    public float startingHealth;
 
     public BulletSpawner[] phase1Spawners;
     public BulletSpawner[] phase2Spawners;
@@ -59,12 +59,12 @@ public class BossScript : MonoBehaviour
         }
         if(activeBoss)
         {
-            healthBar.fillAmount = GetComponent<EnemyScript>().health / 100f;
+            healthBar.fillAmount = GetComponent<EnemyScript>().health / startingHealth;
             nameText.text = bossName;
         }
         if(!activeBoss)
         {
-            GetComponent<EnemyScript>().health = 100;
+            GetComponent<EnemyScript>().health = startingHealth;
         }
         //UnityEngine.Debug.Log(GetComponent<EnemyScript>().health);
         //UnityEngine.Debug.Log(GetComponent<EnemyScript>().health - (phaseHealth * currentPhase));
