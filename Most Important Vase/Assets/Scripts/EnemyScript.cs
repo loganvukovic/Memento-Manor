@@ -29,6 +29,8 @@ public class EnemyScript : MonoBehaviour
 
     public float health = 5f;
 
+    public float scoreYield = 1000f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -127,6 +129,7 @@ public class EnemyScript : MonoBehaviour
         if (health <= 0f)
         {
             Destroy(this.gameObject);
+            FindObjectOfType<GameManager>().score += scoreYield;
         }
         else return;
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,11 +19,13 @@ public class GameManager : MonoBehaviour
     public CircleCollider2D[] gauntletRanges;
     public bool paused = false;
     public GameObject pauseScreen;
+    public float score;
+    public TextMeshProUGUI scoreText;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        score = 0;
     }
 
     // Update is called once per frame
@@ -36,6 +39,11 @@ public class GameManager : MonoBehaviour
         {
             Unpause();
         }
+
+        if(score < 0)
+        {
+            score = 0;
+        }
     }
 
     public void GameOver()
@@ -43,6 +51,7 @@ public class GameManager : MonoBehaviour
         if (Time.timeScale != 0 && !gameOver)
         {
             gameOver = true;
+            scoreText.text = "Score: " + score;
             Time.timeScale = 0f;
             gameOverScreen.SetActive(true);
         }
@@ -52,6 +61,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         playerScript.currentHealth = 100;
+        score = 0;
         UnityEngine.Debug.Log(Time.timeScale);
         gameOverScreen.SetActive(false);
         gameOver = false;

@@ -99,6 +99,7 @@ public class Bullet : MonoBehaviour
             {
                 other.GetComponent<PlayerMovement>().currentHealth -= damage;
                 other.GetComponent<PlayerMovement>().timeSinceDamage = 0;
+                FindObjectOfType<GameManager>().score -= 100;
             }
 
             Destroy(this.gameObject);
