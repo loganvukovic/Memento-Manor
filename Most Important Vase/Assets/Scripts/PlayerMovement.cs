@@ -179,10 +179,10 @@ public class PlayerMovement : MonoBehaviour
                 jumpForceTime = 0f;
             }
 
-            /*if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+            if (Input.GetKeyDown(KeyCode.X) && isGrounded())
             {
                 Jump();
-            }*/
+            }
         }
         /*
                 if (isDashing)
