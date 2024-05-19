@@ -7,6 +7,8 @@ public class KillsHandsBoss : MonoBehaviour
     public BoxCollider2D[] invisWalls;
     public Animator healthAnim;
     public BossScript bossScript;
+    public AudioSource audioSource;
+    public AudioClip newAudioClip;
 
     // Start is called before the first frame update
     void Start()
@@ -28,5 +30,7 @@ public class KillsHandsBoss : MonoBehaviour
         }
         healthAnim.SetBool("inFight", false);
         bossScript.activeBoss = false;
+        audioSource.clip = newAudioClip;
+        audioSource.Play();
     }
 }
