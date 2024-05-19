@@ -9,6 +9,8 @@ public class KillsHandsBoss : MonoBehaviour
     public BossScript bossScript;
     public AudioSource audioSource;
     public AudioClip newAudioClip;
+    public Animator playerAnimator;
+    public BoxCollider2D endingTrigger;
 
     // Start is called before the first frame update
     void Start()
@@ -32,5 +34,13 @@ public class KillsHandsBoss : MonoBehaviour
         bossScript.activeBoss = false;
         audioSource.clip = newAudioClip;
         audioSource.Play();
+        if(playerAnimator != null) 
+        {
+            playerAnimator.SetBool("Ending", true);
+        }
+        if (endingTrigger != null) 
+        {
+            endingTrigger.enabled = true;
+        }
     }
 }
