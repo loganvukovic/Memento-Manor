@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public BulletSpawner[] gauntletSpawners;
     public CircleCollider2D[] gauntletRanges;
     public bool paused = false;
+    public GameObject pauseScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -93,12 +94,14 @@ public class GameManager : MonoBehaviour
     void Pause()
     {
         paused = true;
+        pauseScreen.SetActive(true);
         Time.timeScale = 0f;
     }
 
     void Unpause()
     {
         paused = false;
+        pauseScreen.SetActive(false);
         Time.timeScale = 1f;
     }
 }
