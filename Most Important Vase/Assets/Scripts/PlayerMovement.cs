@@ -292,6 +292,7 @@ public class PlayerMovement : MonoBehaviour
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
+        rb.velocity = new Vector2(rb.velocity.x, 0f);
         rb.gravityScale = originalGravity;
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
@@ -405,11 +406,23 @@ public class PlayerMovement : MonoBehaviour
                 currentHealth -= 5;
             }
         }
+        if (other.gameObject.tag == "Ground")
+        {
+            rb.gravityScale = 1f;
+        }
         /*if (other.gameObject.tag == "Hands")
         {
             currentHealth -= 10;
             transform.position = new Vector3(transform.position.x + 3 * direction, transform.position.y + 5, transform.position.z);
         }*/
+    }
+
+    void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Slope" && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.X)))
+        {
+            rb.gravityScale = 1f;
+        }
     }
 
     void OnCollisionStay2D(Collision2D other)
@@ -418,5 +431,13 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x + other.gameObject.GetComponent<MovingPlatform>().distanceMoved /*(other.gameObject.GetComponent<MovingPlatform>().timeSinceSpawn * other.gameObject.GetComponent<MovingPlatform>().speed * transform.right.x)*/, transform.position.y, transform.position.z);
         }
+        if(other.gameObject.tag == "Slope" && (!Input.GetKey(KeyCode.Space) || !Input.GetKey(KeyCode.X)))
+        {
+            rb.gravityScale = 2f;
+        }
+        /*else if (other.gameObject.tag == "Slope" && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.X)))
+        {
+            rb.gravityScale = 1f;
+        }*/
     }
 }

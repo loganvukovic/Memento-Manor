@@ -20,6 +20,7 @@ TagManager:
   - Pit
   - Moving
   - Lava
+  - Slope
   layers:
   - Default
   - TransparentFX
