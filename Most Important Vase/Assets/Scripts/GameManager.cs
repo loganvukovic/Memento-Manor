@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public BoxCollider2D gauntletTrigger;
     public BulletSpawner[] gauntletSpawners;
     public CircleCollider2D[] gauntletRanges;
+    public bool paused = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.P) && !paused)
+        {
+            Pause();
+        }
+        else if (Input.GetKeyDown(KeyCode.P) && paused)
+        {
+            Unpause();
+        }
     }
 
     public void GameOver()
@@ -80,5 +88,17 @@ public class GameManager : MonoBehaviour
         {
             spawner.shotsLeft = spawner.totalShots;
         }
+    }
+
+    void Pause()
+    {
+        paused = true;
+        Time.timeScale = 0f;
+    }
+
+    void Unpause()
+    {
+        paused = false;
+        Time.timeScale = 1f;
     }
 }
