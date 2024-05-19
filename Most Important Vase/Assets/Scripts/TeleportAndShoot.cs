@@ -30,9 +30,13 @@ public class TeleportAndShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isTeleporting)
+        if (!isTeleporting && !player.GetComponent<PlayerMovement>().inDialogue)
         {
             StartCoroutine(Teleport());
+        }
+        if (player.GetComponent<PlayerMovement>().inDialogue)
+        {
+            StopAllCoroutines();
         }
     }
 
