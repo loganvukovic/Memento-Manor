@@ -17,6 +17,9 @@ public class DialogueManager : MonoBehaviour
     public Queue<string> names;
     public Queue<string> sentences;
 
+    public AudioSource audioSource;
+    public AudioClip newAudioClip;
+
     void Start()
     {
         names = new Queue<string>();
@@ -72,5 +75,11 @@ public class DialogueManager : MonoBehaviour
         animator.SetBool("IsOpen", false);
         playerMovement.inDialogue = false;
         playerMovement.timeSinceDialogue = 0f;
+
+        if (newAudioClip != null && audioSource != null)
+        {
+            audioSource.clip = newAudioClip;
+            audioSource.Play();
+        }
     }
 }
