@@ -65,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
 
     public GameManager gameManager;
 
+    public AudioSource dashSound;
+
     private void Awake()
     {
         //Grab references for rigidbody
@@ -290,6 +292,7 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
         tr.emitting = true;
+        dashSound.Play();
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
         rb.velocity = new Vector2(rb.velocity.x, 0f);
