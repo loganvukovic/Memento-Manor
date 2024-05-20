@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Gauntlet : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Gauntlet : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip unlockSound;
+
+    public TextMeshProUGUI timerText;
 
     void Start()
     {
@@ -34,6 +37,10 @@ public class Gauntlet : MonoBehaviour
         {
             EndGauntlet();
         }
+        if (timerText != null)
+        {
+            timerText.text = "Time: " + Mathf.FloorToInt(timer);
+        }
     }
 
     public void StartGauntlet()
@@ -42,6 +49,10 @@ public class Gauntlet : MonoBehaviour
         animator.SetBool("IsOpen",  false);
         collider.enabled = true;
         timer = 0f;
+        if (timerText != null)
+        {
+            timerText.enabled = true;
+        }
     }
 
     void EndGauntlet()
@@ -52,5 +63,17 @@ public class Gauntlet : MonoBehaviour
         timer = 0f;
         audioSource.clip = unlockSound;
         audioSource.Play();
+        if (timerText != null)
+        {
+            timerText.enabled = false;
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (timerText != null)
+        {
+            timerText.enabled = false;
+        }
     }
 }
