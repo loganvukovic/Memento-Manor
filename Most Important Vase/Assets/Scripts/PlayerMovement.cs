@@ -181,10 +181,21 @@ public class PlayerMovement : MonoBehaviour
                 canJump = true;
                 jumpForceTime = 0f;
             }
+            else
+            {
+                canJump = false;
+            }
 
             if (Input.GetKeyDown(KeyCode.X) && isGrounded())
             {
                 Jump();
+            }
+            if (Input.GetKeyDown(KeyCode.C) && isGrounded())
+            {
+                float trueJumpPower = jumpPower;
+                jumpPower /= 1.3f;
+                Jump();
+                jumpPower = trueJumpPower;
             }
         }
         /*
