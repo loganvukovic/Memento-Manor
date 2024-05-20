@@ -11,6 +11,8 @@ public class PlayerAttacks : MonoBehaviour
     public float damage = 1f;
     public bool shootingUp = false;
     public bool inDialogue;
+    public AudioSource audioSource;
+    public AudioClip knifeSound;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +44,8 @@ public class PlayerAttacks : MonoBehaviour
                 Instantiate(knife, new Vector2(transform.position.x - 1, transform.position.y + 2), Quaternion.identity);
             }
             timeSinceShot = 0;
+            audioSource.clip = knifeSound;
+            audioSource.Play();
         }
 
         timeSinceShot += Time.deltaTime;

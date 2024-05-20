@@ -65,7 +65,8 @@ public class PlayerMovement : MonoBehaviour
 
     public GameManager gameManager;
 
-    public AudioSource dashSound;
+    public AudioSource audioSource;
+    public AudioClip dashSound;
 
     private void Awake()
     {
@@ -292,7 +293,8 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
         tr.emitting = true;
-        dashSound.Play();
+        audioSource.clip = dashSound;
+        audioSource.Play();
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
         rb.velocity = new Vector2(rb.velocity.x, 0f);

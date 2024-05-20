@@ -11,7 +11,8 @@ public class Gauntlet : MonoBehaviour
     private Animator animator;
     private BoxCollider2D collider;
 
-    public AudioSource unlockSound;
+    public AudioSource audioSource;
+    public AudioClip unlockSound;
 
     void Start()
     {
@@ -49,6 +50,7 @@ public class Gauntlet : MonoBehaviour
         animator.SetBool("IsOpen", true);
         collider.enabled = false;
         timer = 0f;
-        unlockSound.Play();
+        audioSource.clip = unlockSound;
+        audioSource.Play();
     }
 }
