@@ -9,6 +9,8 @@ public class Key : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip unlockSound;
 
+    public BoxCollider2D doorDialogue;
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -24,6 +26,7 @@ public class Key : MonoBehaviour
         door.GetComponent<BoxCollider2D>().enabled = false;
         door.GetComponent<Animator>().SetBool("IsOpen", true);
         audioSource.clip = unlockSound;
+        doorDialogue.enabled = false;
         audioSource.Play();
     }
 }
