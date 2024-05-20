@@ -28,6 +28,7 @@ public class TeleportPlayer : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Teleport the player to the destination
+            BlackOutSquare.SetActive(true);
             StartCoroutine(FadeBlackOutSquare());
             //other.transform.position = teleportDestination.position;
             //spriteRenderer.sprite = backgroundSprite;
@@ -66,6 +67,7 @@ public class TeleportPlayer : MonoBehaviour
             BlackOutSquare.GetComponent<UnityEngine.UI.Image>().color = objectColor;
             yield return null;
         }
+        BlackOutSquare.SetActive(false);
     }
     
 }
